@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/anthonysgro/apartment-finder">
-    <img src="images/RoboHouse.png" alt="Logo" width="120" height="120">
+    <img src="images/RoboHouse.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
   </a>
 
   <h3 align="center">RoboHouse</h3>
@@ -91,7 +91,6 @@ Of course, this is an ambitious project, and your needs may be different from mi
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 -   [Puppeteer](https://pptr.dev/)
--   [Puppeteer-Extra](https://www.npmjs.com/package/puppeteer-extra)
 -   [Cheerio](https://www.npmjs.com/package/cheerio)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
