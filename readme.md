@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/anthonysgro/apartment-finder">
-    <img src="images/RoboHouse.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
+    <img src="images/RoboHouseLogoCrop.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
   </a>
 
   <h3 align="center">RoboHouse</h3>
