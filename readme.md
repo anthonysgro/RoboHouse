@@ -26,7 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/anthonysgro/apartment-finder">
+  <a href="https://github.com/anthonysgro/RoboHouse">
     <img src="images/RoboHouseLogoCrop.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
   </a>
 
@@ -36,11 +36,11 @@
     A side-project to get an apartment quicker than everybody else...
     <br />
     <br />
-    <a href="https://github.com/anthonysgro/apartment-finder">View Demo</a>
+    <a href="https://github.com/anthonysgro/RoboHouse">View Demo</a>
     ·
-    <a href="https://github.com/anthonysgro/apartment-finder/issues">Report Bug</a>
+    <a href="https://github.com/anthonysgro/RoboHouse/issues">Report Bug</a>
     ·
-    <a href="https://github.com/anthonysgro/apartment-finder/issues">Request Feature</a>
+    <a href="https://github.com/anthonysgro/RoboHouse/issues">Request Feature</a>
   </p>
 </div>
 
@@ -118,7 +118,7 @@ _Below is an example of how you can instruct your audience on installing and set
 1. Get a free API Key at [https://scraperapi.com/](https://scraperapi.com/)
 2. Clone the repo
     ```sh
-    git clone https://github.com/anthonysgro/apartment-finder.git
+    git clone https://github.com/anthonysgro/RoboHouse.git
     ```
 3. Install NPM packages
     ```sh
@@ -158,7 +158,7 @@ TBD
 -   [ ] Handle custom queries
 -   [ ] Handle Slack notifications
 
-See the [open issues](https://github.com/anthonysgro/apartment-finder/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/anthonysgro/RoboHouse/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -193,23 +193,23 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Anthony Sgro - [@yaboysgro](https://twitter.com/yaboysgro)
 
-Project Link: [https://github.com/anthonysgro/apartment-finder](https://github.com/anthonysgro/apartment-finder)
+Project Link: [https://github.com/anthonysgro/RoboHouse](https://github.com/anthonysgro/RoboHouse)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/anthonysgro/apartment-finder.svg?style=for-the-badge
-[contributors-url]: https://github.com/anthonysgro/apartment-finder/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/anthonysgro/apartment-finder.svg?style=for-the-badge
-[forks-url]: https://github.com/anthonysgro/apartment-finder/network/members
-[stars-shield]: https://img.shields.io/github/stars/anthonysgro/apartment-finder.svg?style=for-the-badge
-[stars-url]: https://github.com/anthonysgro/apartment-finder/stargazers
-[issues-shield]: https://img.shields.io/github/issues/anthonysgro/apartment-finder.svg?style=for-the-badge
-[issues-url]: https://github.com/anthonysgro/apartment-finder/issues
-[license-shield]: https://img.shields.io/github/license/anthonysgro/apartment-finder.svg?style=for-the-badge
-[license-url]: https://github.com/anthonysgro/apartment-finder/blob/main/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/anthonysgro/RoboHouse.svg?style=for-the-badge
+[contributors-url]: https://github.com/anthonysgro/RoboHouse/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/anthonysgro/RoboHouse.svg?style=for-the-badge
+[forks-url]: https://github.com/anthonysgro/RoboHouse/network/members
+[stars-shield]: https://img.shields.io/github/stars/anthonysgro/RoboHouse.svg?style=for-the-badge
+[stars-url]: https://github.com/anthonysgro/RoboHouse/stargazers
+[issues-shield]: https://img.shields.io/github/issues/anthonysgro/RoboHouse.svg?style=for-the-badge
+[issues-url]: https://github.com/anthonysgro/RoboHouse/issues
+[license-shield]: https://img.shields.io/github/license/anthonysgro/RoboHouse.svg?style=for-the-badge
+[license-url]: https://github.com/anthonysgro/RoboHouse/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/sgro
 [product-screenshot]: images/screenshot.png
