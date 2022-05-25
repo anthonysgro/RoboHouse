@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/anthonysgro/apartment-finder">
-    <img src="images/robo-house.png" alt="Logo" width="80" height="80">
+    <img src="images/RoboHouse.png" alt="Logo" width="120" height="120">
   </a>
 
   <h3 align="center">RoboHouse</h3>
@@ -192,13 +192,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-TBD
+Anthony Sgro - [@yaboysgro](https://twitter.com/yaboysgro)
 
-<!-- Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Project Link: [https://github.com/anthonysgro/apartment-finder](https://github.com/anthonysgro/apartment-finder)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p> -->
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -212,7 +210,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [issues-shield]: https://img.shields.io/github/issues/anthonysgro/apartment-finder.svg?style=for-the-badge
 [issues-url]: https://github.com/anthonysgro/apartment-finder/issues
 [license-shield]: https://img.shields.io/github/license/anthonysgro/apartment-finder.svg?style=for-the-badge
-[license-url]: https://github.com/anthonysgro/apartment-finder/blob/main/license.txt
+[license-url]: https://github.com/anthonysgro/apartment-finder/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/sgro
 [product-screenshot]: images/screenshot.png
