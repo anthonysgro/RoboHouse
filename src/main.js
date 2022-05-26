@@ -6,7 +6,7 @@ const {
 } = require("./utils");
 const { Rental } = require("../server/db");
 const MILLISECONDS_PER_MINUTE = 60000;
-const MINUTES_TO_SLEEP = 1;
+const MINUTES_TO_SLEEP = 10;
 
 module.exports = main = async () => {
     try {

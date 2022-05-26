@@ -22,7 +22,6 @@ async function initServer() {
         // Middleware
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-        app.use(express.static(path.join(__dirname, "../public")));
 
         // Middleware Logging
         app.use(morgan("dev"));
@@ -42,6 +41,10 @@ async function initServer() {
         app.get("/robohouse", async (req, res, next) => {
             try {
                 res.sendStatus(200);
+
+                // -------------------------------------------------------------------
+                // | This is where all the code is that you're probably interested in |
+                // -------------------------------------------------------------------
                 await main();
             } catch (err) {
                 next(err);
@@ -54,7 +57,7 @@ async function initServer() {
             res.send(err.message || "Internal server error");
         });
 
-        // Seed Database
+        // Seed Database for testing purposes
         // await seedDatabase();
 
         // Create http server with app
