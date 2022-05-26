@@ -70,6 +70,7 @@ Rental.init(
     {
         timestamps: true,
         sequelize,
+        tableName: "rentals",
     },
 );
 
