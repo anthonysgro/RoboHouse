@@ -1,6 +1,8 @@
 const getProxyConfig = require("./proxy");
 
 module.exports = generateSecurePage = async (browser) => {
+    console.log("\x1b[32m", "Configuring Page for Headless Browsing...\n");
+
     // Get Proxy Config
     const { PROXY_USERNAME, PROXY_PASSWORD } = getProxyConfig();
 
@@ -46,6 +48,8 @@ module.exports = generateSecurePage = async (browser) => {
     // Enable javascript so we do not get blocked
     await page.setJavaScriptEnabled(true);
 
-    console.log("\x1b[32m", "Configured Page for Headless Browsing...\n");
+    // Extend timeout a bit if your internet is wonky
+    page.setDefaultNavigationTimeout(120000);
+
     return page;
 };

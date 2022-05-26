@@ -6,7 +6,8 @@ const scrape = require("./scraper");
 // Scrape URL
 const URL =
     "https://streeteasy.com/1-bedroom-apartments-for-rent/uws/price:-3100";
-
+const URL_TEST =
+    "https://medium.com/recraftrelic/getting-started-with-puppeteerjs-f1f55a0ef7b9";
 module.exports = robohouse = async () => {
     let page;
     let browser;
@@ -22,9 +23,6 @@ module.exports = robohouse = async () => {
 
         // Scrape URL with page
         const results = await scrape(URL, page);
-
-        // console.log("\x1b[32m", "Number of results retrieved: ");
-        // console.log(results.length);
 
         return results;
     } catch (err) {

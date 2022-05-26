@@ -14,6 +14,7 @@
     "dependencies": {
         "@godaddy/terminus": "^4.10.2",
         "@slack/bolt": "^3.11.1",
+        "axios": "^0.27.2",
         "cheerio": "^1.0.0-rc.11",
         "express": "^4.18.1",
         "pg": "^8.7.3",
@@ -21,7 +22,8 @@
         "puppeteer-extra": "^3.2.3",
         "puppeteer-extra-plugin-adblocker": "^2.12.0",
         "puppeteer-extra-plugin-stealth": "^2.9.0",
-        "sequelize": "^6.20.0"
+        "sequelize": "^6.20.0",
+        "slack-block-builder": "^2.5.0"
     },
     "devDependencies": {
         "dotenv": "^16.0.1",

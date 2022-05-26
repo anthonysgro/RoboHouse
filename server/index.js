@@ -8,7 +8,7 @@ const { createTerminus } = require("@godaddy/terminus");
 
 // Port, API, and DB imports
 const PORT = process.env.PORT || 8888;
-const { homeRoute, alertsRoute, robohouseRoute } = require("./api");
+const { homeRoute, alertsRoute, robohouseRoute, testRoute } = require("./api");
 const { Rental, seedDatabase } = require("./db");
 
 // Code Imports
@@ -34,6 +34,7 @@ async function initServer() {
         app.use("/", homeRoute); // homepage
         app.use("/api/alerts", alertsRoute); // slack bot alerts
         app.use("/api/robohouse", robohouseRoute); // web scraper
+        app.use("/api/test", testRoute); // test slack post while avoid scraping process
 
         // Error handling middleware
         app.use((err, req, res, next) => {
@@ -42,7 +43,7 @@ async function initServer() {
         });
 
         // Seed Database for testing purposes
-        // await seedDatabase();
+        await seedDatabase();
 
         // Create http server with app
         const server = http.createServer(app);

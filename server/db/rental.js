@@ -1,3 +1,4 @@
+const { addListener } = require("nodemon");
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("./db");
 
@@ -21,8 +22,50 @@ Rental.init(
             unique: true,
             validate: {
                 isUrl: true,
+                notEmpty: false,
             },
         },
+        primaryImage: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false,
+            validate: {
+                notEmpty: false,
+                isUrl: true,
+            },
+        },
+        neighborhood: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false,
+            validate: {
+                notEmpty: false,
+            },
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true,
+            validate: {
+                notEmpty: false,
+            },
+        },
+        price: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false,
+            validate: {
+                notEmpty: false,
+            },
+        },
+        // images: {
+        //     type: DataTypes.ARRAY(DataTypes.STRING),
+        //     allowNull: true,
+        //     unique: false,
+        //     validate: {
+        //         notEmpty: false,
+        //     },
+        // },
     },
     {
         timestamps: true,

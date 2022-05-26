@@ -14,12 +14,12 @@ const batchCreateRentalsIfNotExists = async (rentals) => {
         if (rentals.length === 0) return;
 
         const createQueue = [];
-        for (const { url, description } of rentals) {
-            const isNew = await isRentalUrlUnique(url);
-            if (isNew) createQueue.push(Rental.create({ url, description }));
+        for (const rental of rentals) {
+            const isNew = await isRentalUrlUnique(rental.url);
+            if (isNew) createQueue.push(Rental.create(rental));
         }
 
-        const newRentals = Promise.all(createQueue);
+        const newRentals = await Promise.all(createQueue);
 
         return newRentals;
     } catch (err) {
