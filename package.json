@@ -24,12 +24,11 @@
         "puppeteer-extra-plugin-stealth": "^2.9.0",
         "sequelize": "^6.20.0",
         "slack-block-builder": "^2.5.0",
-        "dotenv": "^16.0.1"
+        "dotenv": "^16.0.1",
+        "nodemon": "^2.0.16",
+        "morgan": "^1.10.0"
     },
-    "devDependencies": {
-        "morgan": "^1.10.0",
-        "nodemon": "^2.0.16"
-    },
+    "devDependencies": {},
     "overrides": {
         "puppeteer-extra-plugin-adblocker": {
             "puppeteer": "^14.1.1"
