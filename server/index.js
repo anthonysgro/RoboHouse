@@ -4,12 +4,16 @@ const http = require("http");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const express = require("express");
-const PORT = process.env.PORT || 8888;
-const main = require("../src/main");
-
 const { createTerminus } = require("@godaddy/terminus");
-const { onSignal, onHealthCheck } = require("./server-health");
+
+// Port, API, and DB imports
+const PORT = process.env.PORT || 8888;
+const { homeRoute, alertsRoute, robohouseRoute } = require("./api");
 const { Rental, seedDatabase } = require("./db");
+
+// Code Imports
+const main = require("../src/main");
+const { onSignal, onHealthCheck } = require("./server-health");
 
 async function initServer() {
     try {
@@ -26,30 +30,10 @@ async function initServer() {
         // Middleware Logging
         app.use(morgan("dev"));
 
-        // Setup main api route
-        app.get("/", async (req, res, next) => {
-            try {
-                res.status(200).send(
-                    "Welcome to RoboHouse! Use the /robohouse endpoint to trigger continuous searching",
-                );
-            } catch (err) {
-                next(err);
-            }
-        });
-
-        // RoboHouse
-        app.get("/robohouse", async (req, res, next) => {
-            try {
-                res.sendStatus(200);
-
-                // -------------------------------------------------------------------
-                // | This is where all the code is that you're probably interested in |
-                // -------------------------------------------------------------------
-                await main();
-            } catch (err) {
-                next(err);
-            }
-        });
+        // Configure API endpoints
+        app.use("/", homeRoute); // homepage
+        app.use("/api/alerts", alertsRoute); // slack bot alerts
+        app.use("/api/robohouse", robohouseRoute); // web scraper
 
         // Error handling middleware
         app.use((err, req, res, next) => {
