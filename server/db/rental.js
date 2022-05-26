@@ -31,7 +31,6 @@ Rental.init(
             unique: false,
             validate: {
                 notEmpty: false,
-                isUrl: true,
             },
         },
         neighborhood: {
