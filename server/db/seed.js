@@ -17,7 +17,7 @@ module.exports = seedDatabase = async () => {
             Database Connected
         `);
 
-        await seedRentals();
+        // await seedRentals();
     } catch (err) {
         console.log("error seeding data:", err);
     }
