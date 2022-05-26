@@ -4,19 +4,31 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "start:dev": "npm run start-server",
+        "start-server": "nodemon server --ignore public",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@godaddy/terminus": "^4.10.2",
         "cheerio": "^1.0.0-rc.11",
+        "express": "^4.18.1",
         "puppeteer": "^14.1.1",
         "puppeteer-extra": "^3.2.3",
         "puppeteer-extra-plugin-adblocker": "^2.12.0",
-        "puppeteer-extra-plugin-stealth": "^2.9.0"
+        "puppeteer-extra-plugin-stealth": "^2.9.0",
+        "sequelize": "^6.20.0"
     },
     "devDependencies": {
-        "dotenv": "^16.0.1"
+        "dotenv": "^16.0.1",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.16"
+    },
+    "overrides": {
+        "puppeteer-extra-plugin-adblocker": {
+            "puppeteer": "^14.1.1"
+        }
     }
 }

@@ -1,6 +1,6 @@
 const getProxyConfig = require("./proxy");
 
-module.exports = configureHeadlessBrowsing = async (browser) => {
+module.exports = generateSecurePage = async (browser) => {
     // Get Proxy Config
     const { PROXY_USERNAME, PROXY_PASSWORD } = getProxyConfig();
 

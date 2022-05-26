@@ -1,11 +1,10 @@
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const AdblockerPlugin = require("puppeteer-extra-plugin-adblocker");
 const cheerio = require("cheerio");
 
 let browser;
 
-async function scrape(endpoint, page) {
+module.exports = scrape = async (endpoint, page) => {
     try {
         // Access browser page
         const response = await page.goto(endpoint, {
@@ -25,12 +24,8 @@ async function scrape(endpoint, page) {
             results.push({ url, description });
         });
 
-        // console.log(results.length);
-        console.log("\x1b[37m", "Printing Rental Card:");
-        console.log(results);
+        return results;
     } catch (err) {
         console.log(err);
     }
-}
-
-module.exports = { scrape };
+};
