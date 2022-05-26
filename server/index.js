@@ -1,7 +1,6 @@
 // Server setup
 const path = require("path");
 const http = require("http");
-const morgan = require("morgan");
 const dotenv = require("dotenv");
 const express = require("express");
 const { createTerminus } = require("@godaddy/terminus");
@@ -26,9 +25,6 @@ async function initServer() {
         // Middleware
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-
-        // Middleware Logging
-        app.use(morgan("dev"));
 
         // Configure API endpoints
         app.use("/", homeRoute); // homepage
