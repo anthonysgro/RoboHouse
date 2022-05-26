@@ -6,12 +6,10 @@ const dotenv = require("dotenv");
 const express = require("express");
 const PORT = process.env.PORT || 8888;
 const main = require("../src/main");
-const sleep = require("../src/sleep");
 
 const { createTerminus } = require("@godaddy/terminus");
 const { onSignal, onHealthCheck } = require("./server-health");
-// const { model, seedDatabase } = require("./db");
-// const { User } = model;
+const { Rental, seedDatabase } = require("./db");
 
 async function initServer() {
     try {
@@ -32,14 +30,22 @@ async function initServer() {
         // Setup main api route
         app.get("/", async (req, res, next) => {
             try {
-                const rentals = await main();
-                rentals.forEach((rental) => {
-                    console.log(rental);
-                });
+                res.status(200).send(
+                    "Welcome to RoboHouse! Use the /robohouse endpoint to trigger continuous searching",
+                );
             } catch (err) {
                 next(err);
             }
-            res.send("Hello, world!");
+        });
+
+        // RoboHouse
+        app.get("/robohouse", async (req, res, next) => {
+            try {
+                res.sendStatus(200);
+                await main();
+            } catch (err) {
+                next(err);
+            }
         });
 
         // Error handling middleware

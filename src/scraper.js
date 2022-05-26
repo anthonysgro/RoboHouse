@@ -12,7 +12,9 @@ module.exports = scrape = async (endpoint, page) => {
         });
 
         const content = await page.content();
-        const htmlString = await response.text();
+
+        // Uncomment to view raw HTML
+        // const htmlString = await response.text();
         // console.log(htmlString);
 
         const $ = cheerio.load(content);

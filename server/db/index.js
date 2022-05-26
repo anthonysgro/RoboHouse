@@ -1,9 +1,9 @@
 const db = require("./db");
-const Rental = require("./rental");
+const { Rental } = require("./rental");
+const seedDatabase = require("./seed");
 
 module.exports = {
     db,
-    model: {
-        Rental,
-    },
+    Rental,
+    seedDatabase,
 };

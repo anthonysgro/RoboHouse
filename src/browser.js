@@ -20,6 +20,7 @@ module.exports = launchBrowser = async (headless) => {
         defaultViewport: null,
         args: [
             "--no-sandbox",
+            "--disable-gpu",
             "--disable-setuid-sandbox",
             "--disable-infobars",
             "--window-position=0,0",
@@ -39,6 +40,16 @@ module.exports = launchBrowser = async (headless) => {
             executablePath: revisionInfo.executablePath,
             headless,
         });
+
+        // If browser is killed, close it
+        // browser.on("kill", async (done) => {
+        //     console.log("\x1b[32m", "Killing browser...");
+        //     if (browser !== null) {
+        //         await browser.close();
+        //     }
+
+        //     done();
+        // });
 
         console.log("\x1b[32m", `Connected to Chromium Browser with Proxy: `);
         console.log(
