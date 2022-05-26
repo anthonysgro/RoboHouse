@@ -12,7 +12,7 @@ const seedRentals = async () => {
 
 module.exports = seedDatabase = async () => {
     try {
-        await sequelize.sync({ force: true });
+        // await sequelize.sync({ force: true });
         console.log(`
             Database Connected
         `);
