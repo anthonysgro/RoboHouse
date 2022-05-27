@@ -5,7 +5,7 @@ const { _attributes } = require("../server/db/db");
 
 let browser;
 
-module.exports = scrape = async (endpoint, page) => {
+module.exports = scrapeFirstPage = async (endpoint, page) => {
     try {
         console.log("\x1b[32m", "Navigating to requested page...\n");
 

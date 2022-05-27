@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const createSlackBlockJson = require("../../src/block");
+const createSlackBlockJson = require("../../src/slack");
 
 const testRoute = Router();
 
