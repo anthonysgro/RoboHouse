@@ -16,7 +16,7 @@ module.exports = launchBrowser = async (headless) => {
     const chromiumVersion = "991974";
     const chromeOptions = {
         ignoreHTTPSErrors: true,
-        slowMo: 250,
+        slowMo: 0,
         defaultViewport: null,
         args: [
             "--no-sandbox",
