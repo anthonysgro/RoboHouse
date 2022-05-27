@@ -7,7 +7,7 @@ const {
 } = require("./utils");
 const { Rental } = require("../server/db");
 const postSlackMessage = require("./slack");
-const MINUTES_TO_SLEEP = 10;
+const MINUTES_TO_SLEEP = 20;
 
 module.exports = main = async () => {
     try {
