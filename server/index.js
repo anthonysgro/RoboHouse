@@ -25,6 +25,7 @@ async function initServer() {
         // Middleware
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
+        app.use(express.static(path.join(__dirname, "../public")));
 
         // Configure API endpoints
         app.use("/", homeRoute); // homepage

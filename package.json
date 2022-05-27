@@ -1,37 +1,62 @@
 {
-    "name": "apartment-finder",
+    "name": "robohouse",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node server",
-        "start:dev": "nodemon server",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "npm run build && node server --ignore dist/ --ignore client",
+        "build": "webpack --mode=production",
+        "start:dev": "npm run build-watch & npm run start-server",
+        "start-server": "nodemon server --ignore public",
+        "build-watch": "webpack -w --mode=development",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "semantic-ui-css-patch"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@babel/core": "^7.18.2",
+        "@babel/preset-react": "^7.17.12",
         "@godaddy/terminus": "^4.10.2",
+        "@semantic-ui-react/css-patch": "^1.0.0",
         "@slack/bolt": "^3.11.1",
         "axios": "^0.27.2",
+        "babel-loader": "^8.2.5",
         "cheerio": "^1.0.0-rc.11",
+        "css-loader": "^6.7.1",
+        "dotenv": "^16.0.1",
         "express": "^4.18.1",
+        "file-loader": "^6.2.0",
+        "fomantic-ui-css": "^2.8.8",
+        "morgan": "^1.10.0",
+        "node-polyfill-webpack-plugin": "^1.1.4",
+        "nodemon": "^2.0.16",
         "pg": "^8.7.3",
         "puppeteer": "^14.1.1",
         "puppeteer-extra": "^3.2.3",
         "puppeteer-extra-plugin-adblocker": "^2.12.0",
         "puppeteer-extra-plugin-stealth": "^2.9.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "semantic-ui-css": "^2.4.1",
+        "semantic-ui-react": "^2.0.1",
         "sequelize": "^6.20.0",
         "slack-block-builder": "^2.5.0",
-        "dotenv": "^16.0.1",
-        "nodemon": "^2.0.16",
-        "morgan": "^1.10.0"
+        "source-map-loader": "^3.0.1",
+        "style-loader": "^3.3.1",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.72.1"
     },
-    "devDependencies": {},
     "overrides": {
         "puppeteer-extra-plugin-adblocker": {
             "puppeteer": "^14.1.1"
+        },
+        "semantic-ui-react": {
+            "react": "^18.0.0"
         }
+    },
+    "devDependencies": {
+        "webpack-cli": "^4.9.2"
     }
 }

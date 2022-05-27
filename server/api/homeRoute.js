@@ -1,13 +1,12 @@
 const { Router } = require("express");
 const axios = require("axios");
+const path = require("path");
 
 const homeRoute = Router();
 
 homeRoute.get("/", async (req, res, next) => {
     try {
-        res.status(200).send(
-            "Welcome to RoboHouse! Use the /api/robohouse endpoint to trigger continuous searching",
-        );
+        res.sendFile(path.join(__dirname, "../public/index.html"));
     } catch (err) {
         console.error(err);
         next(err);
