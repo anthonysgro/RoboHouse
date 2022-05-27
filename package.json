@@ -10,7 +10,7 @@
         "start-server": "nodemon server --ignore public",
         "build-watch": "webpack -w --mode=development",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "semantic-ui-css-patch"
+        "postinstall": "semantic-ui-css-patch && node fomantic-patch.js"
     },
     "keywords": [],
     "author": "",
@@ -23,6 +23,7 @@
         "@slack/bolt": "^3.11.1",
         "axios": "^0.27.2",
         "babel-loader": "^8.2.5",
+        "chalk": "^4.1.2",
         "cheerio": "^1.0.0-rc.11",
         "css-loader": "^6.7.1",
         "dotenv": "^16.0.1",

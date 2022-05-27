@@ -4,6 +4,7 @@ const http = require("http");
 const dotenv = require("dotenv");
 const express = require("express");
 const { createTerminus } = require("@godaddy/terminus");
+const morgan = require("morgan");
 
 // Port, API, and DB imports
 const PORT = process.env.PORT || 8888;
@@ -23,9 +24,10 @@ async function initServer() {
         dotenv.config();
 
         // Middleware
+        app.use(express.static(path.join(__dirname, "../public")));
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-        app.use(express.static(path.join(__dirname, "../public")));
+        app.use(morgan("dev"));
 
         // Configure API endpoints
         app.use("/", homeRoute); // homepage

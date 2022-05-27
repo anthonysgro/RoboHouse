@@ -24,7 +24,7 @@ const webpackConfig = {
                     limit: 10000,
                 },
             },
-            { test: /\.(png|jpg)$/, loader: "file-loader" },
+            // { test: /\.(png|jpg)$/, loader: "file-loader" },
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
