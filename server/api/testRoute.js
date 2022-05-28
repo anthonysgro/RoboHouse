@@ -16,7 +16,6 @@ testRoute.get("/", async (req, res, next) => {
                 price: "$3,195",
                 neighborhood: "Rental Unit in Upper West Side",
                 address: "82 West 105th Street #4I",
-                site: "Streeteasy",
             },
         ]);
 

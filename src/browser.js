@@ -51,11 +51,8 @@ module.exports = launchBrowser = async (headless) => {
         //     done();
         // });
 
-        console.log("\x1b[32m", `Connected to Chromium Browser with Proxy: `);
-        console.log(
-            "\x1b[36m",
-            `http://${PROXY_SERVER}:${PROXY_SERVER_PORT}\n`,
-        );
+        console.log(`Connected to Chromium Browser with Proxy: `);
+        console.log(`http://${PROXY_SERVER}:${PROXY_SERVER_PORT}\n`);
 
         return browser;
     } catch (err) {

@@ -8,6 +8,8 @@ const createSlackBlockJson = ({
     url,
     neighborhood,
     site,
+    beds,
+    baths,
 }) => {
     return {
         blocks: [
@@ -23,7 +25,7 @@ const createSlackBlockJson = ({
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*<${url}|${address}>*\n${neighborhood}\n${price} per month`,
+                    text: `*<${url}|${address}>*\n${neighborhood}\n${price} per month\n${beds} • ${baths}`,
                 },
                 accessory: {
                     type: "image",
