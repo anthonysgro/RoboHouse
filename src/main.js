@@ -17,11 +17,7 @@ module.exports = main = async () => {
             await postSlackMessage(newRentals);
 
             // Sleep for 10 minutes and ping again
-            console.log(
-                "\x1b[32m",
-                `Sleeping for ${MINUTES_TO_SLEEP} minutes...\n`,
-            );
-
+            console.log(`Sleeping for ${MINUTES_TO_SLEEP} minutes...\n`);
             await sleep(60000 * MINUTES_TO_SLEEP);
         }
     } catch (err) {

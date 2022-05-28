@@ -57,14 +57,30 @@ Rental.init(
                 notEmpty: false,
             },
         },
-        // images: {
-        //     type: DataTypes.ARRAY(DataTypes.STRING),
-        //     allowNull: true,
-        //     unique: false,
-        //     validate: {
-        //         notEmpty: false,
-        //     },
-        // },
+        beds: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false,
+            validate: {
+                notEmpty: false,
+            },
+        },
+        baths: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false,
+            validate: {
+                notEmpty: false,
+            },
+        },
+        site: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: false,
+            validate: {
+                notEmpty: false,
+            },
+        },
     },
     {
         timestamps: true,

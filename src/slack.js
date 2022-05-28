@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 const createSlackBlockJson = ({
     address,
     price,
@@ -5,6 +7,7 @@ const createSlackBlockJson = ({
     primaryImage,
     url,
     neighborhood,
+    site,
 }) => {
     return {
         blocks: [
@@ -13,7 +16,7 @@ const createSlackBlockJson = ({
                 text: {
                     type: "plain_text",
                     emoji: true,
-                    text: "There is a new Streeteasy Listing!",
+                    text: `There is a new ${site} Listing!`,
                 },
             },
             {

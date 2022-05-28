@@ -1,14 +1,13 @@
 const { Router } = require("express");
 const axios = require("axios");
-const createSlackBlockJson = require("../../src/slack");
+const postSlackMessage = require("../../src/slack");
 
 const testRoute = Router();
 
 testRoute.get("/", async (req, res, next) => {
     try {
-        await axios.post(
-            process.env.SLACK_APP_WEBHOOK_URL,
-            createSlackBlockJson({
+        await postSlackMessage([
+            {
                 url: "https://streeteasy.com/building/309-west-84-street-new_york/5",
                 description:
                     "Rental Unit in Upper West Side at 309 West 84th Street #5 for $2,850",
@@ -17,8 +16,9 @@ testRoute.get("/", async (req, res, next) => {
                 price: "$3,195",
                 neighborhood: "Rental Unit in Upper West Side",
                 address: "82 West 105th Street #4I",
-            }),
-        );
+                site: "Streeteasy",
+            },
+        ]);
 
         res.status(200).send("Successfully posted to Slack!");
     } catch (err) {
