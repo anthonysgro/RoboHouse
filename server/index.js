@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const { createTerminus } = require("@godaddy/terminus");
 const morgan = require("morgan");
+const main = require("../src/main");
 
 // Port, API, and DB imports
 const PORT = process.env.PORT || 8888;
@@ -62,6 +63,8 @@ async function initServer() {
             http://localhost:${PORT}
             `),
         );
+
+        await main();
     } catch (err) {
         console.error(err);
     }
