@@ -17,7 +17,7 @@ const batchCreateRentalsIfNotExists = async (rentals) => {
         for (const rental of rentals) {
             const isNew = await isRentalUrlUnique(rental.url);
             if (isNew) {
-                // console.log("New apartment found:", rental);
+                console.log("New apartment found:", rental);
                 createQueue.push(Rental.create(rental));
             } else {
                 break;

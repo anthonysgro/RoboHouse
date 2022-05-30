@@ -8,7 +8,7 @@ const {
 
 const scrapeCorcoran = async (endpoint, page) => {
     try {
-        console.log("Navigating to Corcoran search page...\n");
+        console.log("Navigating to Corcoran search page...");
 
         // Access browser page
         const response = await page.goto(endpoint);
@@ -68,7 +68,7 @@ const scrapeCorcoran = async (endpoint, page) => {
 };
 
 const scrapeCompass = async (endpoint, page) => {
-    console.log("Navigating to Compass search page...\n");
+    console.log("Navigating to Compass search page...");
     const content = await extractContentFromPage(endpoint, page);
     const $ = cheerio.load(content);
 
@@ -111,7 +111,7 @@ const scrapeCompass = async (endpoint, page) => {
 
 const scrapeStreeteasy = async (endpoint, page) => {
     try {
-        console.log("Navigating to Streeteasy search page...\n");
+        console.log("Navigating to Streeteasy search page...");
         const content = await extractContentFromPage(endpoint, page);
         const $ = cheerio.load(content);
 

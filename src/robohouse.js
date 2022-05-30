@@ -30,7 +30,7 @@ module.exports = robohouse = async () => {
         dotenv.config();
 
         // Initialize chromium browsers
-        console.log("Launching Browser with Puppeteer...\n");
+        console.log("Launching Browser with Puppeteer...");
         [streeteasyPage, streeteasyBrowser] =
             await generateSecureBrowsingEnvironment({
                 headless: true,
@@ -61,14 +61,11 @@ module.exports = robohouse = async () => {
         console.log(
             "Number of new Streeteasy listings stored to DB:",
             newStreeteasyRentals.length,
-            "\n",
         );
 
         console.log(
             "Number of new Corcoran listings stored to DB:",
             newCorcoranRentals.length,
-
-            "\n",
         );
     } catch (err) {
         console.error(err);

@@ -5,7 +5,7 @@ module.exports = generateSecurePage = async ({
     proxyEnabled,
     interceptScripts,
 }) => {
-    console.log("Configuring Page for Headless Browsing...\n");
+    console.log("Configuring Page for Headless Browsing...");
 
     // Get Proxy Config
     const { PROXY_USERNAME, PROXY_PASSWORD } = getProxyConfig();
