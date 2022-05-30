@@ -9,7 +9,7 @@ const { batchCreateRentalsIfNotExists } = require("./utils");
 
 // Scrape URL
 const STREETEASY_URL =
-    "https://streeteasy.com/1-bedroom-apartments-for-rent/uws/price:-3100";
+    "https://streeteasy.com/for-rent/uws/price:-3100%7Cbeds:1-3";
 
 const CORCORAN_URL =
     "https://www.corcoran.com/homes-for-rent/location/upper-west-side-ny-7662/regionId=1?bedMin=1&bedMax=1&priceMax=3100&sortBy=listedDate%2Bdesc";
