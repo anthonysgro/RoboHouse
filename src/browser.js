@@ -2,7 +2,6 @@ const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const AdblockerPlugin = require("puppeteer-extra-plugin-adblocker");
 const generateSecurePage = require("./page");
-
 const getProxyConfig = require("./proxy");
 
 // Puppeteer Config

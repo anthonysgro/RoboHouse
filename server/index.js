@@ -63,7 +63,7 @@ async function initServer() {
             `),
         );
 
-        await main();
+        if (process.env.APP_ENV === "prod") await main();
     } catch (err) {
         console.error(err);
     }

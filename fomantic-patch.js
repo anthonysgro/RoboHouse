@@ -37,7 +37,7 @@ const run = async () => {
                     `Failed to find "${path.resolve(
                         process.cwd(),
                         fileToPatchPath,
-                    )}", please check your installation of "semantic-ui-less"`,
+                    )}", please check your installation of "fomantic-ui-less"`,
                 ),
             );
         }

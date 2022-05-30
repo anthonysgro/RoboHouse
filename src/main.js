@@ -7,13 +7,18 @@ const {
 } = require("./utils");
 const { Rental } = require("../server/db");
 const postSlackMessage = require("./slack");
+const emitNewListingsViaText = require("./twilio");
 const MINUTES_TO_SLEEP = 20;
 
 module.exports = main = async () => {
     try {
         while (true) {
+            // Get Listings
             const newRentals = await robohouse();
+
+            // Emit Listings
             await postSlackMessage(newRentals);
+            emitNewListingsViaText(newRentals);
 
             // Sleep for 10 minutes and ping again
             console.log(`Sleeping for ${MINUTES_TO_SLEEP} minutes...\n`);
