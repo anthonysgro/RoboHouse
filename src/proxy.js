@@ -1,5 +1,4 @@
 // URL: https://dashboard.scraperapi.com/dashboard
-
 module.exports = getProxyConfig = () => {
     return {
         PROXY_USERNAME: process.env.PROXY_USERNAME,
