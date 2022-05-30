@@ -77,7 +77,7 @@ module.exports = robohouse = async () => {
         if (corcoranBrowser !== null) await corcoranBrowser.close();
         if (streeteasyBrowser !== null) await streeteasyBrowser.close();
 
-        console.log("Shut down Puppeteer browser...\n");
+        console.log("Shut down Puppeteer browser...");
 
         return [...newStreeteasyRentals, ...newCorcoranRentals];
     }
