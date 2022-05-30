@@ -31,7 +31,8 @@ class App extends Component {
 
     startScraping = async () => {
         console.log("Starting to scrape...");
-        await axios.get("/api/robohouse");
+        const { data: status } = await axios.get("/api/robohouse");
+        await this.setState({ ...this.state, status });
     };
 
     handleToggleDropdownMenu = () => {

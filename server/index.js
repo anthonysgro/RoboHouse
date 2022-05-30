@@ -35,7 +35,7 @@ async function initServer() {
         // Configure API endpoints
         app.use("/", homeRoute); // homepage
         app.use("/api/alerts", alertsRoute); // slack bot alerts
-        app.use("/api/robohouse", robohouseRoute); // web scraper
+        // app.use("/api/robohouse", robohouseRoute); // web scraper
         app.use("/api/test", testRoute); // test slack post while avoid scraping process
 
         app.get("/api/robohouse", async (req, res, next) => {
@@ -79,7 +79,7 @@ async function initServer() {
             `),
         );
 
-        if (process.env.APP_ENV === "dev") {
+        if (process.env.APP_ENV === "prod") {
             applicationStatus = "ON";
             await tryUntilSucceed(main, 3);
         }
