@@ -9,7 +9,7 @@ const morgan = require("morgan");
 // Port, API, and DB imports
 const PORT = process.env.PORT || 8888;
 const { homeRoute, alertsRoute, robohouseRoute, testRoute } = require("./api");
-const { Rental, seedDatabase } = require("./db");
+const { Rental, forceSyncDB } = require("./db");
 
 // Code Imports
 const main = require("../src/main");
@@ -42,7 +42,7 @@ async function initServer() {
         });
 
         // Seed Database for testing purposes
-        // await seedDatabase();
+        // await forceSyncDB();
 
         // Create http server with app
         const server = http.createServer(app);

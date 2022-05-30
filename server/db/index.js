@@ -1,9 +1,9 @@
 const db = require("./db");
 const { Rental } = require("./rental");
-const seedDatabase = require("./seed");
+const forceSyncDB = require("./seed");
 
 module.exports = {
     db,
     Rental,
-    seedDatabase,
+    forceSyncDB,
 };

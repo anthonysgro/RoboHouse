@@ -18,13 +18,14 @@ module.exports = main = async () => {
 
             // Emit Listings
             await postSlackMessage(newRentals);
-            emitNewListingsViaText(newRentals);
+            await emitNewListingsViaText(newRentals);
 
             // Sleep for 10 minutes and ping again
             console.log(`Sleeping for ${MINUTES_TO_SLEEP} minutes...\n`);
             await sleep(60000 * MINUTES_TO_SLEEP);
         }
     } catch (err) {
+        console.error(err);
         return err;
     }
 };

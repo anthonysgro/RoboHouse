@@ -3,9 +3,9 @@ const sequelize = require("./db");
 
 const seedRentals = async () => {};
 
-module.exports = seedDatabase = async () => {
+module.exports = forceSyncDB = async () => {
     try {
-        // await sequelize.sync({ force: true });
+        await sequelize.sync({ force: true });
         console.log(`
             Database Connected
         `);
