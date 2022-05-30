@@ -8,21 +8,25 @@ import {
     Menu,
     Image,
 } from "semantic-ui-react";
+
 import axios from "axios";
 
 class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            dropdownMenuStyle: {
+                display: "none",
+            },
+            status: "STARTING",
+        };
 
         this.startScraping = this.startScraping.bind(this);
     }
 
-    componentDidMount = async () => {};
-
-    state = {
-        dropdownMenuStyle: {
-            display: "none",
-        },
+    componentDidMount = async () => {
+        const { data: status } = await axios.get("/status");
+        await this.setState({ ...this.state, status });
     };
 
     startScraping = async () => {
@@ -31,17 +35,17 @@ class App extends Component {
     };
 
     handleToggleDropdownMenu = () => {
-        let newState = Object.assign({}, this.state);
-        if (newState.dropdownMenuStyle.display === "none") {
-            newState.dropdownMenuStyle = { display: "flex" };
-        } else {
-            newState.dropdownMenuStyle = { display: "none" };
-        }
-
-        this.setState(newState);
+        // let newState = Object.assign({}, this.state);
+        // if (newState.dropdownMenuStyle.display === "none") {
+        //     newState.dropdownMenuStyle = { display: "flex" };
+        // } else {
+        //     newState.dropdownMenuStyle = { display: "none" };
+        // }
+        // this.setState(newState);
     };
 
     render() {
+        const { status } = this.state;
         return (
             <div className="App">
                 <Grid padded className="tablet computer only">
@@ -95,6 +99,22 @@ class App extends Component {
                         id="logo"
                     ></Image>
                     <Header size="huge">RoboHouse</Header>
+                    <div className="lead">App Status:</div>
+                    {status === "STARTING" ? (
+                        <Icon
+                            name="spinner"
+                            color="yellow"
+                            loading
+                            size="large"
+                        />
+                    ) : status === "ON" ? (
+                        <Icon name="check circle" color="green" size="large" />
+                    ) : (
+                        <Icon name="warning circle" color="red" size="large" />
+                    )}
+                    <div> </div>
+
+                    <br />
                     <p className="lead">Manual Restart:</p>
                     <Button onClick={this.startScraping}>Start Scraping</Button>
                 </Container>

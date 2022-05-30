@@ -17,7 +17,6 @@ const { sleep, tryUntilSucceed } = require("../src/utils");
 const { onSignal, onHealthCheck } = require("./server-health");
 
 let applicationStatus = "STARTING";
-
 async function initServer() {
     try {
         // Creates our server
@@ -38,6 +37,19 @@ async function initServer() {
         app.use("/api/alerts", alertsRoute); // slack bot alerts
         app.use("/api/robohouse", robohouseRoute); // web scraper
         app.use("/api/test", testRoute); // test slack post while avoid scraping process
+
+        app.get("/api/robohouse", async (req, res, next) => {
+            try {
+                applicationStatus = "ON";
+                res.status(200).send(applicationStatus);
+                await tryUntilSucceed(main, 3);
+            } catch (error) {
+                next(error);
+            }
+        });
+        app.get("/status", (req, res, next) => {
+            res.send(applicationStatus);
+        });
 
         // Error handling middleware
         app.use((err, req, res, next) => {
@@ -67,7 +79,7 @@ async function initServer() {
             `),
         );
 
-        if (process.env.APP_ENV === "prod") {
+        if (process.env.APP_ENV === "dev") {
             applicationStatus = "ON";
             await tryUntilSucceed(main, 3);
         }
