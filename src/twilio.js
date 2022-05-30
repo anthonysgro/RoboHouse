@@ -1,7 +1,6 @@
 const sendText = (to, from, body) => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_ACCOUNT_TOKEN;
-
     const client = require("twilio")(accountSid, authToken);
 
     client.messages
@@ -20,8 +19,8 @@ module.exports = emitNewListingsViaText = (newListings) => {
     const isProd = process.env.APP_ENV === "prod";
     const dev_subscribers = [process.env.TWILIO_MY_PHONE_NUMBER];
     const prod_subscribers = [
-        process.env.TWILIO_MY_PHONE_NUMBER,
-        process.env.TWILIO_FRIEND_PHONE_NUMBER,
+        process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER,
+        process.env.TWILIO_ACCOUNT_FRIEND_PHONE_NUMBER,
     ];
 
     if (newListings.length > 0) {
