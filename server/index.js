@@ -42,7 +42,7 @@ async function initServer() {
         });
 
         // Seed Database for testing purposes
-        await seedDatabase();
+        // await seedDatabase();
 
         // Create http server with app
         const server = http.createServer(app);
