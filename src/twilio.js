@@ -35,6 +35,6 @@ module.exports = emitNewListingsViaText = (newListings) => {
             console.log("Texted Listing to Subscribers:", address);
         }
     } else {
-        console.log("Nothing to text.");
+        console.log("Nothing to text");
     }
 };
