@@ -29,7 +29,7 @@ module.exports = robohouse = async () => {
         // Configure environment variables
         dotenv.config();
 
-        // Initialize chromium browser
+        // Initialize chromium browsers
         console.log("Launching Browser with Puppeteer...\n");
         [streeteasyPage, streeteasyBrowser] =
             await generateSecureBrowsingEnvironment({

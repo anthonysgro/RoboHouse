@@ -13,6 +13,8 @@ const MINUTES_TO_SLEEP = 20;
 module.exports = main = async () => {
     try {
         while (true) {
+            console.log("********** Beginning Scrape **********");
+
             // Get Listings
             const newRentals = await robohouse();
 
