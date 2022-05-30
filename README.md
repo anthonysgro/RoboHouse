@@ -88,7 +88,16 @@ Of course, this is an ambitious project, and your needs may be different from mi
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+-   [Node.js](https://nodejs.org/en/)
+-   [Express](https://expressjs.com/)
+-   [React](https://reactjs.org/)
+-   [PostgreSQL](https://www.postgresql.org/)
+-   [Sequelize](https://sequelize.org/)
+-   [Webpack](https://webpack.js.org/)
+
+-   [ScraperAPI](https://www.scraperapi.com/)
+-   [Twilio](https://www.twilio.com/)
+-   [Slack](https://www.slack.com/)
 
 -   [Puppeteer](https://pptr.dev/)
 -   [Cheerio](https://www.npmjs.com/package/cheerio)
@@ -212,4 +221,4 @@ Project Link: [https://github.com/anthonysgro/RoboHouse](https://github.com/anth
 [license-url]: https://github.com/anthonysgro/RoboHouse/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/sgro
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/assets/screenshot.png

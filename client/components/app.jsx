@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import {
     Button,
-    Container,
+    Segment,
     Grid,
     Header,
     Icon,
     Menu,
     Image,
+    Popup,
 } from "semantic-ui-react";
 
 import axios from "axios";
+import questionMark from "../../public/assets/question-mark.png";
+import RoboHouseLogo from "../../public/assets/RoboHouseLogoCrop.png";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropdownMenuStyle: {
-                display: "none",
-            },
             status: "STARTING",
         };
 
@@ -35,72 +35,24 @@ class App extends Component {
         await this.setState({ ...this.state, status });
     };
 
-    handleToggleDropdownMenu = () => {
-        // let newState = Object.assign({}, this.state);
-        // if (newState.dropdownMenuStyle.display === "none") {
-        //     newState.dropdownMenuStyle = { display: "flex" };
-        // } else {
-        //     newState.dropdownMenuStyle = { display: "none" };
-        // }
-        // this.setState(newState);
-    };
+    clickHerokuLogs = async () => {};
 
     render() {
         const { status } = this.state;
         return (
             <div className="App">
-                <Grid padded className="tablet computer only">
-                    <Menu borderless fluid inverted size="huge">
-                        <Container></Container>
-                    </Menu>
-                </Grid>
-                <Grid padded className="mobile only">
-                    <Menu borderless fluid inverted size="huge">
-                        <Menu.Item header as="a" href="#root">
-                            RoboHouse
-                        </Menu.Item>
-                        <Menu.Menu position="right">
-                            <Menu.Item>
-                                <Button
-                                    icon
-                                    inverted
-                                    basic
-                                    toggle
-                                    onClick={this.handleToggleDropdownMenu}
-                                >
-                                    <Icon name="content" />
-                                </Button>
-                            </Menu.Item>
-                        </Menu.Menu>
-                        <Menu
-                            borderless
-                            fluid
-                            inverted
-                            vertical
-                            style={this.state.dropdownMenuStyle}
-                        >
-                            <Menu.Item active as="a" href="#root">
-                                Home
-                            </Menu.Item>
-                            <Menu.Item as="a" href="#root">
-                                About
-                            </Menu.Item>
-                            <Menu.Item as="a" href="#root">
-                                Contact
-                            </Menu.Item>
-                        </Menu>
-                    </Menu>
-                </Grid>
-                <Container text textAlign="center">
+                <Segment textAlign="center" raised className="main-segment">
                     <Image
-                        src="/assets/RoboHouseLogoCrop.png"
+                        src={RoboHouseLogo}
                         size="medium"
                         centered
                         circular
                         id="logo"
                     ></Image>
-                    <Header size="huge">RoboHouse</Header>
-                    <div className="lead">App Status:</div>
+                    <Header size="huge" className="robo-header">
+                        RoboHouse
+                    </Header>
+                    <div className="lead status">App Status:</div>
                     {status === "STARTING" ? (
                         <Icon
                             name="spinner"
@@ -118,7 +70,35 @@ class App extends Component {
                     <br />
                     <p className="lead">Manual Restart:</p>
                     <Button onClick={this.startScraping}>Start Scraping</Button>
-                </Container>
+
+                    <br />
+                    <Popup
+                        trigger={
+                            <a
+                                href="https://dashboard.heroku.com/apps/robohouse/logs"
+                                target="_blank"
+                            >
+                                <Image
+                                    src={questionMark}
+                                    alt=""
+                                    style={{
+                                        width: "14px",
+                                        height: "auto",
+                                        filter: "opacity(40%)",
+                                        position: "relative",
+                                        top: "-1px",
+                                        marginTop: "1rem",
+                                    }}
+                                    avatar
+                                />
+                            </a>
+                        }
+                        position="bottom center"
+                        className="popup"
+                        content="View logs on Heroku"
+                        inverted
+                    />
+                </Segment>
             </div>
         );
     }
