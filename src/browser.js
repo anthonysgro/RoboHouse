@@ -48,8 +48,7 @@ const launchBrowser = async ({ headless, proxyEnabled }) => {
         });
 
         if (proxyEnabled) {
-            console.log(`Connected to Chromium Browser with Proxy: `);
-            console.log(`http://${PROXY_SERVER}:${PROXY_SERVER_PORT}\n`);
+            console.log(`Connected to Chromium Browser with Proxy...`);
         } else {
             console.log("Connected to Chromium Browser without Proxy...");
         }
