@@ -1,56 +1,110 @@
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const cheerio = require("cheerio");
-const { _attributes } = require("../server/db/db");
-const { Item } = require("semantic-ui-react");
+const {
+    convertXpathItemsToSchema,
+    extractContentFromPage,
+    sleep,
+    scrollTo,
+} = require("./utils");
 
-let browser;
+const scrapeCorcoran = async (endpoint, page) => {
+    try {
+        console.log("Navigating to Corcoran search page...\n");
 
-const convertXpathItemsToSchema = async (
-    page,
-    commonXpath,
-    xpathItems,
-    numberOfElements,
-    site,
-) => {
-    const allResults = [];
-    for (let i = 0; i < numberOfElements; i++) {
-        const elementsArr = await Promise.all(
-            xpathItems.map(({ xpath }) =>
-                page.$x(`${commonXpath}${i + 1}${xpath}`),
-            ),
-        );
+        // Access browser page
+        const response = await page.goto(endpoint);
 
-        const enrichedXpaths = xpathItems.map((item, i) => {
-            item.element = elementsArr[i][0];
-            return item;
+        // let data load and scroll to bottom to load images
+        await sleep(10000);
+        await page.evaluate(() => {
+            document
+                .querySelector(
+                    ".ListingCard__ListingCardWrapper-sc-k9s72e-7:last-child",
+                )
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                    inline: "end",
+                });
         });
 
-        const handles = await Promise.all(
-            enrichedXpaths.map(({ element, get }) => element.getProperty(get)),
+        const content = await page.content();
+
+        const $ = cheerio.load(content);
+        const numberOfElements = $(
+            ".ListingCard__ListingCardWrapper-sc-k9s72e-7",
+        ).length;
+
+        const xpathCommon =
+            "/html/body/div[1]/div/main/section/div[1]/div[3]/div[2]/div[";
+        const xpathDesc = "]/div[2]/h2";
+        const xpathHood = "]/div[2]/div[1]";
+        const xpathAddress = "]/div[2]/h2";
+        const xpathBed = "]/div[2]/div[2]/ul[1]/li[2]";
+        const xpathPrice = "]/div[3]/div/div";
+        const xpathPic = "]/div[1]/span/img";
+        const xpathBath = "]/div[2]/div[2]/ul[1]/li[3]";
+        const xpathUrl = "]/a";
+        const xpathItems = [
+            { xpath: xpathDesc, get: "textContent", prop: "description" },
+            { xpath: xpathAddress, get: "textContent", prop: "address" },
+            { xpath: xpathBed, get: "textContent", prop: "beds" },
+            { xpath: xpathPrice, get: "textContent", prop: "price" },
+            { xpath: xpathBath, get: "textContent", prop: "baths" },
+            { xpath: xpathPic, get: "src", prop: "primaryImage" },
+            { xpath: xpathUrl, get: "href", prop: "url" },
+            { xpath: xpathHood, get: "textContent", prop: "neighborhood" },
+        ];
+
+        const allResults = await convertXpathItemsToSchema(
+            page,
+            xpathCommon,
+            xpathItems,
+            numberOfElements,
+            "Corcoran",
         );
 
-        const vals = (
-            await Promise.all(handles.map((handle) => handle.jsonValue()))
-        ).map((val) => val.trim());
+        return allResults;
+    } catch (err) {}
+};
 
-        const listing = {
-            description: vals[0],
-            address: vals[1],
-            price: vals[3],
-            beds: vals[2],
-            baths: vals[4],
-            primaryImage:
-                vals[5].slice(0, 2) !== "//"
-                    ? vals[5]
-                    : vals[5].slice(2, vals[5].length),
-            url: vals[6],
-            site: site,
-            neighborhood: vals[7],
-        };
+const scrapeCompass = async (endpoint, page) => {
+    console.log("Navigating to Compass search page...\n");
+    const content = await extractContentFromPage(endpoint, page);
+    const $ = cheerio.load(content);
 
-        allResults.push(listing);
-    }
+    const numberOfElements = $(
+        ".CardViewWrapper-sc-caer1o > .uc-lolCardView > .uc-lolCardView-cardsContainer > .uc-lolCardView-cards > .uc-listingPhotoCard",
+    ).length;
+    const xpathCommon = "/html/body/main/div/div[1]/div[2]/div[1]/div/div/div[";
+
+    const xpathDesc = "]/div/div[3]/div[2]/div[1]/h2";
+    const xpathHood = "]/div/div[3]/div[2]/div[1]/h2";
+    const xpathAddress = "]/div/div[3]/div[2]/div[1]/h2/a";
+    const xpathBed = "]/div/div[3]/div[2]/div[2]/div[1]";
+    const xpathPrice = "]/div/div[3]/div[2]/div[1]/div/strong";
+    const xpathPic = "]/div/div[1]/img";
+    const xpathBath = "]/div/div[3]/div[2]/div[2]/div[2]";
+    const xpathUrl = "]/div/div[3]/div[2]/div[1]/h2/a";
+
+    const xpathItems = [
+        { xpath: xpathDesc, get: "textContent", prop: "description" },
+        { xpath: xpathAddress, get: "textContent", prop: "address" },
+        { xpath: xpathBed, get: "textContent", prop: "beds" },
+        { xpath: xpathPrice, get: "textContent", prop: "price" },
+        { xpath: xpathBath, get: "textContent", prop: "baths" },
+        { xpath: xpathPic, get: "src", prop: "primaryImage" },
+        { xpath: xpathUrl, get: "href", prop: "url" },
+        { xpath: xpathHood, get: "textContent", prop: "neighborhood" },
+    ];
+
+    const allResults = await convertXpathItemsToSchema(
+        page,
+        xpathCommon,
+        xpathItems,
+        numberOfElements,
+        "Compass",
+    );
+    // console.log(allResults);
 
     return allResults;
 };
@@ -58,16 +112,8 @@ const convertXpathItemsToSchema = async (
 const scrapeStreeteasy = async (endpoint, page) => {
     try {
         console.log("Navigating to Streeteasy search page...\n");
-
-        // Access browser page
-        const response = await page.goto(endpoint, {
-            waitUntil: "domcontentloaded",
-        });
-
-        const content = await page.content();
+        const content = await extractContentFromPage(endpoint, page);
         const $ = cheerio.load(content);
-
-        const results = [];
 
         const xpathCommon =
             "/html/body/div[1]/div[1]/div[2]/div[2]/div[1]/main/div[2]/div[2]/div[2]/div/div/ul/li[";
@@ -109,4 +155,6 @@ const scrapeStreeteasy = async (endpoint, page) => {
 
 module.exports = {
     scrapeStreeteasy,
+    scrapeCorcoran,
+    scrapeCompass,
 };

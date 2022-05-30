@@ -13,7 +13,6 @@ module.exports = main = async () => {
     try {
         while (true) {
             const newRentals = await robohouse();
-
             await postSlackMessage(newRentals);
 
             // Sleep for 10 minutes and ping again

@@ -8,13 +8,11 @@ class Rental extends Model {
 
 Rental.init(
     {
-        description: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             unique: true,
-            validate: {
-                notEmpty: true,
-            },
+            primaryKey: true,
         },
         url: {
             type: DataTypes.STRING(2000),
@@ -22,64 +20,48 @@ Rental.init(
             unique: true,
             validate: {
                 isUrl: true,
-                notEmpty: false,
+                notEmpty: true,
             },
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: false,
         },
         primaryImage: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
         neighborhood: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
         address: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true,
-            validate: {
-                notEmpty: false,
-            },
+            unique: false,
         },
         price: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
         beds: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
         baths: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
         site: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: false,
-            validate: {
-                notEmpty: false,
-            },
         },
     },
     {

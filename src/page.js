@@ -1,6 +1,10 @@
 const getProxyConfig = require("./proxy");
 
-module.exports = generateSecurePage = async (browser) => {
+module.exports = generateSecurePage = async ({
+    browser,
+    proxyEnabled,
+    interceptScripts,
+}) => {
     console.log("Configuring Page for Headless Browsing...\n");
 
     // Get Proxy Config
@@ -8,26 +12,30 @@ module.exports = generateSecurePage = async (browser) => {
 
     // Create page in browser
     const [page] = await browser.pages();
-    await page.authenticate({
-        username: PROXY_USERNAME,
-        password: PROXY_PASSWORD,
-    });
+
+    // Enable proxy if desired
+    if (proxyEnabled) {
+        await page.authenticate({
+            username: PROXY_USERNAME,
+            password: PROXY_PASSWORD,
+        });
+    }
+
+    const requestsToIntercept = interceptScripts
+        ? ["image", "stylesheet", "font", "script"]
+        : ["image", "stylesheet", "font"];
 
     // Block resources from loading to speed up request
     await page.setRequestInterception(true);
     page.on("request", (request) => {
-        if (
-            ["image", "stylesheet", "font", "script"].indexOf(
-                request.resourceType(),
-            ) !== -1
-        ) {
+        if (requestsToIntercept.indexOf(request.resourceType()) !== -1) {
             request.abort();
         } else {
             request.continue();
         }
     });
 
-    // Override window navigator and load page
+    // // Override window navigator and load page
     await page.evaluateOnNewDocument(() => {
         // overwrite the `plugins` property to use a custom getter
         Object.defineProperty(navigator, "webdriver", {

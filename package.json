@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npm run build && node server --ignore dist/ --ignore client",
+        "start": "DEV_ENV=false npm run build && node server --ignore dist/ --ignore client",
         "build": "webpack --mode=production",
-        "start:dev": "npm run build-watch & npm run start-server",
+        "start:dev": "DEV_ENV=true npm run build-watch & npm run start-server",
         "start-server": "nodemon server --ignore public",
         "build-watch": "webpack -w --mode=development",
         "test": "echo \"Error: no test specified\" && exit 1",

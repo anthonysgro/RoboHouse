@@ -25,7 +25,11 @@ const createSlackBlockJson = ({
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*<${url}|${address}>*\n${neighborhood}\n${price} per month\n${beds} • ${baths}`,
+                    text: `*<${url}|${address || "No Address Listed"}>*\n${
+                        neighborhood || "No Neighborhood Listed"
+                    }\n${price || "----"} per month\n${beds || ""} • ${
+                        baths || ""
+                    }`,
                 },
                 accessory: {
                     type: "image",
@@ -45,7 +49,9 @@ module.exports = postSlackMessage = async (newRentals) => {
         if (newRentals.length > 0) {
             for (const rental of newRentals) {
                 await axios.post(
-                    process.env.SLACK_APP_WEBHOOK_URL,
+                    process.env.DEV_ENV
+                        ? process.env.SLACK_APP_WEBHOOK_URL
+                        : process.env.SLACK_APP_WEBHOOK_URL_DEV,
                     createSlackBlockJson(rental),
                 );
                 console.log("Posted listing to slack channel:", rental.address);
