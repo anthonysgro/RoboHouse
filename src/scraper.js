@@ -3,7 +3,6 @@ const {
     convertXpathItemsToSchema,
     extractContentFromPage,
     sleep,
-    scrollTo,
 } = require("./utils");
 
 const scrapeCorcoran = async (endpoint, page) => {
@@ -64,7 +63,9 @@ const scrapeCorcoran = async (endpoint, page) => {
         );
 
         return allResults;
-    } catch (err) {}
+    } catch (err) {
+        throw err;
+    }
 };
 
 const scrapeCompass = async (endpoint, page) => {
@@ -149,7 +150,7 @@ const scrapeStreeteasy = async (endpoint, page) => {
 
         return allResults;
     } catch (err) {
-        console.log(err);
+        throw err;
     }
 };
 

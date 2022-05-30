@@ -55,7 +55,7 @@ const launchBrowser = async ({ headless, proxyEnabled }) => {
 
         return browser;
     } catch (err) {
-        console.error(err);
+        throw err;
     }
 };
 
@@ -75,7 +75,7 @@ const generateSecureBrowsingEnvironment = async ({
 
         return [page, browser];
     } catch (err) {
-        console.error(err);
+        throw err;
     }
 };
 

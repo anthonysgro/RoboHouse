@@ -39,3 +39,7 @@ p.lead {
 .ui.inverted.menu .active.item {
     background-color: #080808;
 }
+
+#logo {
+    box-shadow: 0px 0px 0px 5px #000000;
+}

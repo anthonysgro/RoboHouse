@@ -5,7 +5,7 @@ const isRentalUrlUnique = async (url) => {
         const token = await Rental.findOne({ where: { url } });
         return token === null;
     } catch (err) {
-        return err;
+        throw err;
     }
 };
 
@@ -28,8 +28,7 @@ const batchCreateRentalsIfNotExists = async (rentals) => {
 
         return newRentals;
     } catch (err) {
-        console.log(err);
-        return err;
+        throw err;
     }
 };
 
@@ -39,6 +38,17 @@ const sleep = (ms) => {
     });
 };
 
+const tryUntilSucceed = async (promiseFn, maxTries = 3) => {
+    try {
+        return await promiseFn();
+    } catch (err) {
+        if (maxTries > 0) {
+            return tryUntilSucceed(promiseFn, maxTries - 1);
+        }
+        throw err;
+    }
+};
+
 const convertXpathItemsToSchema = async (
     page,
     commonXpath,
@@ -46,47 +56,53 @@ const convertXpathItemsToSchema = async (
     numberOfElements,
     site,
 ) => {
-    const allResults = [];
-    for (let i = 0; i < numberOfElements; i++) {
-        const elementsArr = await Promise.all(
-            xpathItems.map(({ xpath }) => {
-                return page.$x(`${commonXpath}${i + 1}${xpath}`);
-            }),
-        );
+    try {
+        const allResults = [];
+        for (let i = 0; i < numberOfElements; i++) {
+            const elementsArr = await Promise.all(
+                xpathItems.map(({ xpath }) => {
+                    return page.$x(`${commonXpath}${i + 1}${xpath}`);
+                }),
+            );
 
-        const enrichedXpaths = xpathItems.map((item, idx) => {
-            item.element = elementsArr[idx][0];
-            item.fullXpath = `${commonXpath}${i + 1}${item.xpath}`;
-            return item;
-        });
+            const enrichedXpaths = xpathItems.map((item, idx) => {
+                item.element = elementsArr[idx][0];
+                item.fullXpath = `${commonXpath}${i + 1}${item.xpath}`;
+                return item;
+            });
 
-        const handles = await Promise.all(
-            enrichedXpaths.map(({ element, get }) => element.getProperty(get)),
-        );
+            const handles = await Promise.all(
+                enrichedXpaths.map(({ element, get }) =>
+                    element.getProperty(get),
+                ),
+            );
 
-        const vals = (
-            await Promise.all(handles.map((handle) => handle.jsonValue()))
-        ).map((val) => val.trim());
+            const vals = (
+                await Promise.all(handles.map((handle) => handle.jsonValue()))
+            ).map((val) => val.trim());
 
-        const listing = {
-            description: vals[0],
-            address: vals[1],
-            price: vals[3],
-            beds: vals[2],
-            baths: vals[4],
-            primaryImage:
-                vals[5].slice(0, 2) !== "//"
-                    ? vals[5]
-                    : vals[5].slice(2, vals[5].length),
-            url: vals[6],
-            site: site,
-            neighborhood: vals[7],
-        };
+            const listing = {
+                description: vals[0],
+                address: vals[1],
+                price: vals[3],
+                beds: vals[2],
+                baths: vals[4],
+                primaryImage:
+                    vals[5].slice(0, 2) !== "//"
+                        ? vals[5]
+                        : vals[5].slice(2, vals[5].length),
+                url: vals[6],
+                site: site,
+                neighborhood: vals[7],
+            };
 
-        allResults.push(listing);
+            allResults.push(listing);
+        }
+
+        return allResults;
+    } catch (err) {
+        throw err;
     }
-
-    return allResults;
 };
 
 const extractContentFromPage = async (endpoint, page) => {
@@ -98,19 +114,8 @@ const extractContentFromPage = async (endpoint, page) => {
 
         return await page.content();
     } catch (err) {
-        console.error(err);
-        return err;
+        throw err;
     }
-};
-
-const scrollTo = async (page, className) => {
-    await page.evaluate(() => {
-        document.querySelector(className).scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end",
-        });
-    });
 };
 
 module.exports = {
@@ -119,5 +124,5 @@ module.exports = {
     batchCreateRentalsIfNotExists,
     convertXpathItemsToSchema,
     extractContentFromPage,
-    scrollTo,
+    tryUntilSucceed,
 };

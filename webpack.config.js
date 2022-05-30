@@ -18,13 +18,13 @@ const webpackConfig = {
                 use: ["style-loader", "css-loader"],
             },
             {
-                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                test: /\.(gif|svg|eot|ttf|woff|woff2)$/,
                 loader: "url-loader",
                 options: {
                     limit: 10000,
                 },
             },
-            // { test: /\.(png|jpg)$/, loader: "file-loader" },
+            { test: /\.(png|jpg)$/, loader: "file-loader" },
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,

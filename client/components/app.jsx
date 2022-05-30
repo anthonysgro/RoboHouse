@@ -17,6 +17,8 @@ class App extends Component {
         this.startScraping = this.startScraping.bind(this);
     }
 
+    componentDidMount = async () => {};
+
     state = {
         dropdownMenuStyle: {
             display: "none",
@@ -85,11 +87,15 @@ class App extends Component {
                     </Menu>
                 </Grid>
                 <Container text textAlign="center">
+                    <Image
+                        src="/assets/RoboHouseLogoCrop.png"
+                        size="medium"
+                        centered
+                        circular
+                        id="logo"
+                    ></Image>
                     <Header size="huge">RoboHouse</Header>
-                    <p className="lead">
-                        Start scraping by clicking the button below:
-                    </p>
-
+                    <p className="lead">Manual Restart:</p>
                     <Button onClick={this.startScraping}>Start Scraping</Button>
                 </Container>
             </div>

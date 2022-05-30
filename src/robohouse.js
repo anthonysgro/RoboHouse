@@ -68,8 +68,7 @@ module.exports = robohouse = async () => {
             newCorcoranRentals.length,
         );
     } catch (err) {
-        console.error(err);
-        return err;
+        throw err;
     } finally {
         // Close session
         if (corcoranPage !== null) await corcoranPage.close();

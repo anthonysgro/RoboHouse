@@ -13,7 +13,10 @@ const { Rental, forceSyncDB } = require("./db");
 
 // Code Imports
 const main = require("../src/main");
+const { sleep, tryUntilSucceed } = require("../src/utils");
 const { onSignal, onHealthCheck } = require("./server-health");
+
+let applicationStatus = "STARTING";
 
 async function initServer() {
     try {
@@ -25,6 +28,7 @@ async function initServer() {
 
         // Middleware
         app.use(express.static(path.join(__dirname, "../public")));
+
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
         app.use(morgan("dev"));
@@ -63,8 +67,12 @@ async function initServer() {
             `),
         );
 
-        if (process.env.APP_ENV === "prod") await main();
+        if (process.env.APP_ENV === "prod") {
+            applicationStatus = "ON";
+            await tryUntilSucceed(main, 3);
+        }
     } catch (err) {
+        applicationStatus = "OFF";
         console.error(err);
     }
 }

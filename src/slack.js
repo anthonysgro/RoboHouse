@@ -60,7 +60,6 @@ module.exports = postSlackMessage = async (newRentals) => {
             console.log("Nothing to post to slack channel");
         }
     } catch (err) {
-        console.error(err);
-        return err;
+        throw err;
     }
 };
