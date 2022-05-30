@@ -1,7 +1,9 @@
-const subscribers = [
+const prod_subscribers = [
     process.env.TWILIO_MY_PHONE_NUMBER,
     process.env.TWILIO_FRIEND_PHONE_NUMBER,
 ];
+
+const dev_subscribers = [process.env.TWILIO_MY_PHONE_NUMBER];
 
 const sendText = (to, from, body) => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -23,7 +25,10 @@ const sendText = (to, from, body) => {
 };
 
 module.exports = emitNewListingsViaText = (newListings) => {
-    if (newListings.length > 0 && process.env.APP_ENV === "prod") {
+    const isProd = process.env.APP_ENV === "prod";
+
+    if (newListings.length > 0) {
+        const subscribers = isProd ? prod_subscribers : dev_subscribers;
         for (let i = 0; i < subscribers.length; i++) {
             for (const { site, url, address } of newRentals) {
                 sendText(
