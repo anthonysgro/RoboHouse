@@ -17,67 +17,72 @@ const CORCORAN_URL =
 const COMPASS_URL =
     "https://www.compass.com/for-rent/upper-west-side-manhattan-ny/price.max=3.1K/beds.min=1/dom.max=7days/sort=asc-dom/";
 
-module.exports = robohouse = async () => {
-    let streeteasyPage;
-    let streeteasyBrowser;
-    let corcoranPage;
-    let corcoranBrowser;
-    let newStreeteasyRentals = [];
-    let newCorcoranRentals;
+const streeteasyConfig = {
+    name: "Streeteasy",
+    url: STREETEASY_URL,
+    scraper: scrapeStreeteasy,
+    browsingConfig: {
+        headless: true,
+        proxyEnabled: true,
+        interceptScripts: true,
+    },
+};
 
+const corcoranConfig = {
+    name: "Corcoran",
+    url: CORCORAN_URL,
+    scraper: scrapeCorcoran,
+    browsingConfig: {
+        headless: true,
+        proxyEnabled: false,
+        interceptScripts: false,
+    },
+};
+
+const targets = [streeteasyConfig, corcoranConfig];
+
+module.exports = robohouse = async () => {
+    let sessions = [];
+    let allNewListings = [];
     try {
         // Configure environment variables
         dotenv.config();
 
         // Initialize chromium browsers
         console.log("Launching Browser with Puppeteer...");
-        [streeteasyPage, streeteasyBrowser] =
-            await generateSecureBrowsingEnvironment({
-                headless: true,
-                proxyEnabled: true,
-                interceptScripts: true,
-            });
 
-        [corcoranPage, corcoranBrowser] =
-            await generateSecureBrowsingEnvironment({
-                headless: true,
-                proxyEnabled: false,
-                interceptScripts: false,
-            });
+        for (const { url, browsingConfig, scraper, name } of targets) {
+            [page, browserSession] = await generateSecureBrowsingEnvironment(
+                browsingConfig,
+            );
 
-        const streeteasy = await scrapeStreeteasy(
-            STREETEASY_URL,
-            streeteasyPage,
-        );
-        const corcoran = await scrapeCorcoran(CORCORAN_URL, corcoranPage);
-        // const compass = await scrapeCompass(COMPASS_URL, page);
+            // Get all listings on page
+            const listings = await scraper(url, page);
+            console.log(`Total ${name} listings found:`, listings.length);
 
-        console.log("Total Streeteasy listings found:", streeteasy.length);
-        console.log("Total Corcoran Listings Found:", corcoran.length);
+            // Close page and browser session
+            await page.close();
+            await browserSession.close();
 
-        newStreeteasyRentals = await batchCreateRentalsIfNotExists(streeteasy);
-        newCorcoranRentals = await batchCreateRentalsIfNotExists(corcoran);
+            // Dedupe listings
+            const newListings = await batchCreateRentalsIfNotExists(listings);
+            console.log(
+                `Number of new ${name} listings stored to DB:`,
+                newListings.length,
+            );
+
+            allNewListings = [...allNewListings, ...newListings];
+        }
 
         console.log(
-            "Number of new Streeteasy listings stored to DB:",
-            newStreeteasyRentals.length,
-        );
-
-        console.log(
-            "Number of new Corcoran listings stored to DB:",
-            newCorcoranRentals.length,
+            "Number of new listings stored to DB:",
+            allNewListings.length,
         );
     } catch (err) {
         throw err;
     } finally {
-        // Close session
-        if (corcoranPage !== null) await corcoranPage.close();
-        if (streeteasyPage !== null) await streeteasyPage.close();
-        if (corcoranBrowser !== null) await corcoranBrowser.close();
-        if (streeteasyBrowser !== null) await streeteasyBrowser.close();
-
         console.log("Shut down Puppeteer browser...");
 
-        return [...newStreeteasyRentals, ...newCorcoranRentals];
+        return allNewListings;
     }
 };

@@ -27,6 +27,7 @@ module.exports = main = async () => {
             await sleep(60000 * MINUTES_TO_SLEEP);
         }
     } catch (err) {
+        console.error(err);
         throw err;
     }
 };

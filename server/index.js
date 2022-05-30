@@ -8,7 +8,7 @@ const morgan = require("morgan");
 
 // Port, API, and DB imports
 const PORT = process.env.PORT || 8888;
-const { homeRoute, alertsRoute, robohouseRoute, testRoute } = require("./api");
+const { homeRoute, alertsRoute, testRoute } = require("./api");
 const { Rental, forceSyncDB } = require("./db");
 
 // Code Imports
@@ -35,18 +35,18 @@ async function initServer() {
         // Configure API endpoints
         app.use("/", homeRoute); // homepage
         app.use("/api/alerts", alertsRoute); // slack bot alerts
-        // app.use("/api/robohouse", robohouseRoute); // web scraper
         app.use("/api/test", testRoute); // test slack post while avoid scraping process
 
         app.get("/api/robohouse", async (req, res, next) => {
             try {
                 applicationStatus = "ON";
                 res.status(200).send(applicationStatus);
-                await tryUntilSucceed(main, 3);
+                await tryUntilSucceed(main, 2);
             } catch (error) {
                 next(error);
             }
         });
+
         app.get("/status", (req, res, next) => {
             res.send(applicationStatus);
         });
@@ -81,7 +81,7 @@ async function initServer() {
 
         if (process.env.APP_ENV === "prod") {
             applicationStatus = "ON";
-            await tryUntilSucceed(main, 3);
+            await tryUntilSucceed(main, 2);
         }
     } catch (err) {
         applicationStatus = "OFF";

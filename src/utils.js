@@ -9,16 +9,16 @@ const isRentalUrlUnique = async (url) => {
     }
 };
 
-const batchCreateRentalsIfNotExists = async (rentals) => {
+const batchCreateRentalsIfNotExists = async (listings) => {
     try {
-        if (rentals.length === 0) return;
+        if (listings.length === 0) return;
 
         const createQueue = [];
-        for (const rental of rentals) {
-            const isNew = await isRentalUrlUnique(rental.url);
+        for (const listing of listings) {
+            const isNew = await isRentalUrlUnique(listing.url);
             if (isNew) {
-                console.log("New apartment found:", rental);
-                createQueue.push(Rental.create(rental));
+                console.log("New apartment found:", listing);
+                createQueue.push(Rental.create(listing));
             } else {
                 break;
             }
