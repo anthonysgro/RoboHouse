@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/anthonysgro/RoboHouse">
-    <img src="public/images/RoboHouseLogoCrop.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
+    <img src="public/assets/RoboHouseLogoCrop.png" alt="Logo" width="200" height="200" style="border-radius: 200px" >
   </a>
 
   <h3 align="center">RoboHouse</h3>
@@ -82,11 +82,13 @@ Here's why:
 -   You shouldn't have to accept that botting is impossible on many rental sites. Where there's a will, there's a way!
 -   You should be able to fully customize your preferences and see notifications for new listings at all times.
 
-Of course, this is an ambitious project, and your needs may be different from mine. So I will be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks!
+I will be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
+
+Major Frameworks/Libraries:
 
 -   [Node.js](https://nodejs.org/en/)
 -   [Express](https://expressjs.com/)
@@ -95,9 +97,13 @@ Of course, this is an ambitious project, and your needs may be different from mi
 -   [Sequelize](https://sequelize.org/)
 -   [Webpack](https://webpack.js.org/)
 
+API Integrations:
+
 -   [ScraperAPI](https://www.scraperapi.com/)
 -   [Twilio](https://www.twilio.com/)
 -   [Slack](https://www.slack.com/)
+
+Minor Libraries:
 
 -   [Puppeteer](https://pptr.dev/)
 -   [Cheerio](https://www.npmjs.com/package/cheerio)
@@ -108,39 +114,82 @@ Of course, this is an ambitious project, and your needs may be different from mi
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Here are some instructions to get your project set up locally:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+First, make sure you have the latest version of node and npm.
 
 -   npm
+
     ```sh
     npm install npm@latest -g
     ```
+
+-   postgres: Create a database titled "RoboHouse" through your preferred postgres client (psql, postico, datagrip, etc.)
 
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://scraperapi.com/](https://scraperapi.com/)
-2. Clone the repo
+1.  Clone the repo
+
     ```sh
     git clone https://github.com/anthonysgro/RoboHouse.git
     ```
-3. Install NPM packages
-    ```sh
-    npm install
+
+2.  Add `.gitignore` file if you want:
+
     ```
-4. Create a `.env` file with the following properties:
+    node_modules
+    .env
+    .gitignore
+    dist
+    ```
+
+3.  Add the following property to `.env`:
+
+    ```
+    APP_ENV=dev
+    ```
+
+4.  Get a free API Key at [https://scraperapi.com/](https://scraperapi.com/) and add the following properties to `.env`:
+
     ```
     PROXY_USERNAME=
     PROXY_PASSWORD=
     PROXY_SERVER=proxy-server.scraperapi.com
     PROXY_SERVER_PORT=8001
     ```
-5. Run `node src/main.js`
+
+5.  For Slack notifications, follow the instructions here and create your own workspace and web app: [video](https://www.youtube.com/watch?v=nyaCol4IH5c). Add the following properties to `.env`:
+
+    ```
+    SLACK_APP_WEBHOOK_URL=
+    SLACK_APP_WEBHOOK_URL_DEV=
+    ```
+
+    Create two channels to take advantage of different dev environments. Otherwise, just use the same webhook for both.
+
+6.  For text notifications, create an account at [twilio](https://www.twilio.com/), add your number under Verified Caller ID's (and any other subscriber numbers), and add the following properties to .env:
+
+    ```
+    TWILIO_ACCOUNT_FRIEND_PHONE_NUMBER=
+    TWILIO_ACCOUNT_MY_PHONE_NUMBER=
+    TWILIO_ACCOUNT_PHONE_NUMBER=
+    TWILIO_ACCOUNT_SID=
+    TWILIO_ACCOUNT_TOKEN=
+    ```
+
+7.  Install NPM packages
+
+    ```sh
+    npm install
+    ```
+
+8.  Run `npm run start:dev` to run locally for dev environment
+
+9.  Deploy to [heroku](https://dashboard.heroku.com/) for constant availability. Ensure that you add all environment variables to heroku config, changing `APP_ENV=prod`. You will also have to add the [Heroku Postgres Add-On](https://elements.heroku.com/addons/heroku-postgresql), and add the [puppeteer buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack.git) to the project.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -161,11 +210,12 @@ TBD
 ## Roadmap
 
 -   [x] Add basic scraping for one site
--   [ ] Add continuous scraping with heartbeat
--   [ ] Add database to tell if new listing appears
--   [ ] Deploy live
+-   [x] Add continuous scraping with heartbeat
+-   [x] Add database to tell if new listing appears
+-   [x] Deploy live
 -   [ ] Handle custom queries
--   [ ] Handle Slack notifications
+-   [x] Handle Slack notifications
+-   [x] Handle SMS notifications
 
 See the [open issues](https://github.com/anthonysgro/RoboHouse/issues) for a full list of proposed features (and known issues).
 
