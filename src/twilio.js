@@ -20,10 +20,7 @@ module.exports = emitNewListingsViaText = async (newListings) => {
     try {
         const isProd = process.env.APP_ENV === "prod";
         const dev_subscribers = [process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER];
-        const prod_subscribers = [
-            process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER,
-            process.env.TWILIO_ACCOUNT_FRIEND_PHONE_NUMBER,
-        ];
+        const prod_subscribers = [process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER];
 
         if (newListings.length > 0) {
             const subscribers = isProd ? prod_subscribers : dev_subscribers;
