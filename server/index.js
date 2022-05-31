@@ -39,9 +39,13 @@ async function initServer() {
 
         app.get("/api/robohouse", async (req, res, next) => {
             try {
-                applicationStatus = "ON";
-                res.status(200).send(applicationStatus);
-                await tryUntilSucceed(main, 2);
+                if (applicationStatus === "ON") {
+                    res.sendStatus(200);
+                } else {
+                    applicationStatus = "ON";
+                    res.status(200).send(applicationStatus);
+                    await tryUntilSucceed(main, 2);
+                }
             } catch (error) {
                 next(error);
             }
@@ -53,6 +57,7 @@ async function initServer() {
 
         // Error handling middleware
         app.use((err, req, res, next) => {
+            applicationStatus = "OFF";
             res.status(err.status || 500);
             res.send(err.message || "Internal server error");
         });
