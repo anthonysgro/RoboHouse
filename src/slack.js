@@ -50,7 +50,7 @@ module.exports = postSlackMessage = async (newRentals) => {
             for (const rental of newRentals) {
                 await axios.post(
                     process.env.APP_ENV === "prod"
-                        ? process.env.SLACK_APP_WEBHOOK_URL
+                        ? process.env.SLACK_APP_WEBHOOK_URL_PROD
                         : process.env.SLACK_APP_WEBHOOK_URL_DEV,
                     createSlackBlockJson(rental),
                 );
