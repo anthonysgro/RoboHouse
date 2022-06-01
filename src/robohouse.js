@@ -34,9 +34,9 @@ const getTargets = () => {
 };
 
 module.exports = robohouse = async () => {
-    let sessions = [];
-    let allNewListings = [];
     try {
+        let allNewListings = [];
+
         // Configure environment variables
         dotenv.config();
 
@@ -45,9 +45,8 @@ module.exports = robohouse = async () => {
             // Initialize chromium browsers
             console.log(`Creating ${name} Browsing Session with Puppeteer...`);
 
-            [page, browserSession] = await generateSecureBrowsingEnvironment(
-                browsingConfig,
-            );
+            const [page, browserSession] =
+                await generateSecureBrowsingEnvironment(browsingConfig);
 
             // Get all listings on page
             const listings = await scraper(url, page);
@@ -72,11 +71,11 @@ module.exports = robohouse = async () => {
             "Number of new listings stored to DB:",
             allNewListings.length,
         );
+
+        return allNewListings;
     } catch (err) {
         throw err;
     } finally {
         console.log("Shut down Puppeteer browser...");
-
-        return allNewListings;
     }
 };
