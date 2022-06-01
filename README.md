@@ -169,8 +169,8 @@ _Below is an example of how you can instruct your audience on installing and set
 
     ```yml
     SLACK_NOTIFICATIONS_ENABLED=true
-    SLACK_APP_WEBHOOK_URL=
     SLACK_APP_WEBHOOK_URL_DEV=
+    SLACK_APP_WEBHOOK_URL_PROD=
     ```
 
     Create two channels to take advantage of different dev environments. Otherwise, just use the same webhook for both.
