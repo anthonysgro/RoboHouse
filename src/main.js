@@ -8,7 +8,6 @@ const {
 const { Rental } = require("../server/db");
 const postSlackMessage = require("./slack");
 const emitNewListingsViaText = require("./twilio");
-const MINUTES_TO_SLEEP = 20;
 
 module.exports = main = async () => {
     try {
@@ -19,12 +18,19 @@ module.exports = main = async () => {
             const newRentals = await robohouse();
 
             // Emit Listings
-            await postSlackMessage(newRentals);
-            await emitNewListingsViaText(newRentals);
+            if (process.env.SLACK_NOTIFICATIONS_ENABLED === "true") {
+                await postSlackMessage(newRentals);
+            }
+
+            if (process.env.TEXT_NOTIFICATIONS_ENABLED === "true") {
+                await emitNewListingsViaText(newRentals);
+            }
 
             // Sleep for 10 minutes and ping again
-            console.log(`Sleeping for ${MINUTES_TO_SLEEP} minutes...\n`);
-            await sleep(60000 * MINUTES_TO_SLEEP);
+            console.log(
+                `Sleeping for ${process.env.APP_FREQUENCY_MINUTES} minutes...\n`,
+            );
+            await sleep(60000 * parseInt(process.env.APP_FREQUENCY_MINUTES));
         }
     } catch (err) {
         console.error(err);

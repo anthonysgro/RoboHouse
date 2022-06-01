@@ -19,8 +19,10 @@ const sendText = async (to, from, body) => {
 module.exports = emitNewListingsViaText = async (newListings) => {
     try {
         const isProd = process.env.APP_ENV === "prod";
-        const dev_subscribers = [process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER];
-        const prod_subscribers = [process.env.TWILIO_ACCOUNT_MY_PHONE_NUMBER];
+        const dev_subscribers =
+            process.env.TWILIO_ACCOUNT_DEV_PHONE_NUMBERS.split(",");
+        const prod_subscribers =
+            process.env.TWILIO_ACCOUNT_PROD_PHONE_NUMBERS.split(",");
 
         if (newListings.length > 0) {
             const subscribers = isProd ? prod_subscribers : dev_subscribers;
@@ -28,7 +30,7 @@ module.exports = emitNewListingsViaText = async (newListings) => {
                 for (const { site, url, address } of newListings) {
                     await sendText(
                         subscribers[i],
-                        process.env.TWILIO_ACCOUNT_PHONE_NUMBER,
+                        process.env.TWILIO_ACCOUNT_SOURCE_PHONE_NUMBER,
                         `There is a new ${site} Listing!\n${url}`,
                     );
                 }

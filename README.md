@@ -74,13 +74,15 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-Apartment hunting is a huge hassle, especially in New York City. I searched far and wide for a good way to automate the apartment hunting process, but it seemed impossible. Many sites had ways to identify scripting and bots. Others that didn't had lacklust listings. Thus I bring you, RoboHouse. I wanted to create an apartment bot so amazing that it'll be the last one you ever need -- I think this is it.
+Apartment hunting is a huge hassle, especially in New York City. I felt so defeated seeing a listing that had been up for two days that was already in-contract, or that had already received a daunting amount of applications.
 
-Here's why:
+I searched far and wide for a good way to automate the apartment hunting process, but it seemed impossible. Many sites had ways to identify scripting and bots. The many others that didn't had lacklust listings. Thus I bring you, RoboHouse.
 
--   You should be able to have access to apartments as soon as they come up. Why miss out when even waiting 3 hours could cost you your dream apartment?
--   You shouldn't have to accept that botting is impossible on many rental sites. Where there's a will, there's a way!
--   You should be able to fully customize your preferences and see notifications for new listings at all times.
+Here's why it's cool:
+
+-   You should be able to know about apartments as soon as they are posted. Why miss out when even waiting 3 hours could cost you your dream apartment?
+-   You shouldn't have to rely on Streeteasy's built-in notification system, which plainly does not work for me, even when set to "Instant".
+-   You shouldn't have to accept that botting is impossible on many real estate sites. Where there's a will, there's a way!
 
 I will be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks!
 
@@ -140,56 +142,73 @@ _Below is an example of how you can instruct your audience on installing and set
 
 2.  Add `.gitignore` file if you want:
 
-    ```
+    ```yml
     node_modules
     .env
     .gitignore
     dist
     ```
 
-3.  Add the following property to `.env`:
+3.  Add two properties to `.env`. Use "dev" for your local copy, and "prod" for whenever you deploy to your preferred host provider. MINUTES_TO_SLEEP can be set to anything, but I recommend between 20-45 minutes. The free tier of ScraperAPI (next step) gives you 1000 proxy rotations a month, which will be enough for about 1 API call per 45 minutes. The first week gives you 5000, so you should be good enough to use any value between 20-45 for the duration of your apartment search.
 
-    ```
+    ```yml
     APP_ENV=dev
+    MINUTES_TO_SLEEP=
     ```
 
 4.  Get a free API Key at [https://scraperapi.com/](https://scraperapi.com/) and add the following properties to `.env`:
 
-    ```
+    ```yml
     PROXY_USERNAME=
     PROXY_PASSWORD=
     PROXY_SERVER=proxy-server.scraperapi.com
     PROXY_SERVER_PORT=8001
     ```
 
-5.  For Slack notifications, follow the instructions here and create your own workspace and web app: [video](https://www.youtube.com/watch?v=nyaCol4IH5c). Add the following properties to `.env`:
+5.  There are two notification systems: Slack and Text. Skip to Step 6 if you prefer text. For Slack notifications, follow the instructions here and create your own workspace and web app: [video](https://www.youtube.com/watch?v=nyaCol4IH5c). Add the following properties to `.env`:
 
-    ```
+    ```yml
+    SLACK_NOTIFICATIONS_ENABLED=true
     SLACK_APP_WEBHOOK_URL=
     SLACK_APP_WEBHOOK_URL_DEV=
     ```
 
     Create two channels to take advantage of different dev environments. Otherwise, just use the same webhook for both.
 
-6.  For text notifications, create an account at [twilio](https://www.twilio.com/), add your number under Verified Caller ID's (and any other subscriber numbers), and add the following properties to .env:
+6.  For text notifications, create a free account at [twilio](https://www.twilio.com/), add your number under Verified Caller ID's (and any other subscriber numbers), and add the following properties to .env:
 
-    ```
-    TWILIO_ACCOUNT_FRIEND_PHONE_NUMBER=
-    TWILIO_ACCOUNT_MY_PHONE_NUMBER=
-    TWILIO_ACCOUNT_PHONE_NUMBER=
+    ```yml
+    TEXT_NOTIFICATIONS_ENABLED=true
+    TWILIO_ACCOUNT_DEV_PHONE_NUMBERS=+10987654321,+11234567890  #comma delineated list
+    TWILIO_ACCOUNT_PROD_PHONE_NUMBERS=+10987654321 #for just one, omit comma
+    TWILIO_ACCOUNT_SOURCE_PHONE_NUMBER=           #input default Twilio number
     TWILIO_ACCOUNT_SID=
     TWILIO_ACCOUNT_TOKEN=
     ```
 
-7.  Install NPM packages
+7.  You must indicate your Streeteasy and Corcoran search strings. You can obtain this by navigating to the Streeteasy or Corcoran site and entering your search parameters and going to the search page. You can then obtain your request URL by copy/pasting the search bar and pasting it here. Examples:
+
+    ```yml
+    STREETEASY_URL=https://streeteasy.com/pet-friendly-rentals/nyc/price:-3000%7Carea:139,135%7Cbeds%3E=1%7Cno_fee:1
+
+    # This example url searches for no-fee, pet-friendly 1+ bed apts under $3000/mo in either the UWS or UES.
+
+    CORCORAN_URL=https://www.corcoran.com/homes-for-rent/location/upper-west-side-ny-7662%2Cupper-east-side-ny-7661/regionId=1?priceMax=3000&bedMin=1&features=pet-friendly&sortBy=listedDate%2Bdesc
+
+    # The same query for corcoran (minus no-fee). Important to note, Streeteasy defaults to showing the apartments by "Newest" so you do not need to explicitly include that in the url. This is not the case with Corcoran, so you must append "&sortBy=listedDate%2Bdesc" to your GET request url. If you don't, you may not get the newest apartments correctly.
+    ```
+
+    Note: Only Streeteasy and Corcoran are supported currently. Let me know if you would like to see other sites supported!
+
+8.  Install NPM packages
 
     ```sh
     npm install
     ```
 
-8.  Run `npm run start:dev` to run locally for dev environment
+9.  Run `npm run start:dev` to run locally for dev environment
 
-9.  Deploy to [heroku](https://dashboard.heroku.com/) for constant availability. Ensure that you add all environment variables to heroku config, changing `APP_ENV=prod`. You will also have to add the [Heroku Postgres Add-On](https://elements.heroku.com/addons/heroku-postgresql), and add the [puppeteer buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack.git) to the project.
+10. Deploy to your preferred hosting site. I used [heroku](https://dashboard.heroku.com/). Ensure that you add all environment variables to heroku config, changing `APP_ENV=prod`. You will also have to add the [Heroku Postgres Add-On](https://elements.heroku.com/addons/heroku-postgresql), and add the [puppeteer buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack.git) to the project. I also had to pay to use the first tier of dynos ($7/mo) to make sure the app didn't go to sleep.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -197,11 +216,11 @@ _Below is an example of how you can instruct your audience on installing and set
 
 ## Usage
 
-TBD
+Once the app successfully deploys, it should start up automatically! You may get an initial set of texts/slack messages as all of the apartments found will be new. Use that as confirmation the app works and you set it up correctly.
 
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
+If for some reason the app hits a snag, you should be able to load the webpage which shows the status. Confirm that it is not running either through the logs or the big red X in the frontend. I included a reset button so that you can quickly restart the scraping since sometimes transient failures occur because of the networking nature of this application.
 
-<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
+Feel free to reach out if you have additional questions. There is some basic logging throughout the app that you can use to follow the flow of the application.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -213,9 +232,13 @@ TBD
 -   [x] Add continuous scraping with heartbeat
 -   [x] Add database to tell if new listing appears
 -   [x] Deploy live
--   [ ] Handle custom queries
 -   [x] Handle Slack notifications
 -   [x] Handle SMS notifications
+-   [ ] Handle custom queries outside of env variables
+-   [ ] Automatically message the agent (this would be amazing, but sadly very difficult for Streeteasy)
+-   [ ] Integration with your Streeteasy account
+-   [ ] Add additional real estate site integrations
+-   [ ] Switch to Typescript
 
 See the [open issues](https://github.com/anthonysgro/RoboHouse/issues) for a full list of proposed features (and known issues).
 

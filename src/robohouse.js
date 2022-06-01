@@ -7,39 +7,31 @@ const {
 } = require("./scraper");
 const { batchCreateRentalsIfNotExists } = require("./utils");
 
-// Scrape URL
-const STREETEASY_URL =
-    "https://streeteasy.com/for-rent/uws/price:-3100%7Cbeds:1-3";
+const getTargets = () => {
+    const streeteasyConfig = {
+        name: "Streeteasy",
+        url: process.env.STREETEASY_URL,
+        scraper: scrapeStreeteasy,
+        browsingConfig: {
+            headless: true,
+            proxyEnabled: true,
+            interceptScripts: true,
+        },
+    };
 
-const CORCORAN_URL =
-    "https://www.corcoran.com/homes-for-rent/location/upper-west-side-ny-7662/regionId=1?bedMin=1&priceMax=3100&sortBy=listedDate%2Bdesc";
+    const corcoranConfig = {
+        name: "Corcoran",
+        url: process.env.CORCORAN_URL,
+        scraper: scrapeCorcoran,
+        browsingConfig: {
+            headless: true,
+            proxyEnabled: false,
+            interceptScripts: false,
+        },
+    };
 
-const COMPASS_URL =
-    "https://www.compass.com/for-rent/upper-west-side-manhattan-ny/price.max=3.1K/beds.min=1/dom.max=7days/sort=asc-dom/";
-
-const streeteasyConfig = {
-    name: "Streeteasy",
-    url: STREETEASY_URL,
-    scraper: scrapeStreeteasy,
-    browsingConfig: {
-        headless: true,
-        proxyEnabled: true,
-        interceptScripts: true,
-    },
+    return [streeteasyConfig, corcoranConfig];
 };
-
-const corcoranConfig = {
-    name: "Corcoran",
-    url: CORCORAN_URL,
-    scraper: scrapeCorcoran,
-    browsingConfig: {
-        headless: true,
-        proxyEnabled: false,
-        interceptScripts: false,
-    },
-};
-
-const targets = [streeteasyConfig, corcoranConfig];
 
 module.exports = robohouse = async () => {
     let sessions = [];
@@ -48,10 +40,11 @@ module.exports = robohouse = async () => {
         // Configure environment variables
         dotenv.config();
 
-        // Initialize chromium browsers
-        console.log("Launching Browser with Puppeteer...");
-
+        const targets = getTargets();
         for (const { url, browsingConfig, scraper, name } of targets) {
+            // Initialize chromium browsers
+            console.log(`Creating ${name} Browsing Session with Puppeteer...`);
+
             [page, browserSession] = await generateSecureBrowsingEnvironment(
                 browsingConfig,
             );
@@ -63,6 +56,7 @@ module.exports = robohouse = async () => {
             // Close page and browser session
             await page.close();
             await browserSession.close();
+            console.log(`Closed ${name} Browsing Session`);
 
             // Dedupe listings
             const newListings = await batchCreateRentalsIfNotExists(listings);
