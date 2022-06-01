@@ -132,7 +132,6 @@ First, make sure you have the latest version of node and npm.
 
 ### Installation
 
-
 1.  Clone the repo
 
     ```sh
@@ -148,11 +147,11 @@ First, make sure you have the latest version of node and npm.
     dist
     ```
 
-3.  Add two properties to `.env`. Use "dev" for your local copy, and "prod" for whenever you deploy to your preferred host provider. MINUTES_TO_SLEEP can be set to anything, but I recommend between 20-45 minutes. The free tier of ScraperAPI (next step) gives you 1000 proxy rotations a month, which will be enough for about 1 API call per 45 minutes. The first week gives you 5000, so you should be good enough to use any value between 20-45 for the duration of your apartment search.
+3.  Add two properties to `.env`. Use "dev" for your local copy, and "prod" for whenever you deploy to your preferred host provider. APP_FREQUENCY_MINUTES can be set to anything, but I recommend between 20-45 minutes. The free tier of ScraperAPI (next step) gives you 1000 proxy rotations a month, which will be enough for about 1 API call per 45 minutes. The first week gives you 5000, so you should be good enough to use any value between 20-45 for the duration of your apartment search.
 
     ```yml
     APP_ENV=dev
-    MINUTES_TO_SLEEP=
+    APP_FREQUENCY_MINUTES=
     ```
 
 4.  Get a free API Key at [https://scraperapi.com/](https://scraperapi.com/) and add the following properties to `.env`:
