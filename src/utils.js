@@ -24,9 +24,11 @@ const batchCreateRentalsIfNotExists = async (listings) => {
             }
         }
 
-        const newRentals = await Promise.all(createQueue);
-
-        return newRentals;
+        if (createQueue.length > 0) {
+            return await Promise.all(createQueue);
+        } else {
+            return [];
+        }
     } catch (err) {
         throw err;
     }
