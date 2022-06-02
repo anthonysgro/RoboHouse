@@ -86,7 +86,7 @@ async function initServer() {
 
         if (process.env.APP_ENV === "prod") {
             applicationStatus = "ON";
-            await tryUntilSucceed(main, 2);
+            await tryUntilSucceed(main, 0);
         }
     } catch (err) {
         applicationStatus = "OFF";
