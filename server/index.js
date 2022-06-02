@@ -44,7 +44,7 @@ async function initServer() {
                 } else {
                     applicationStatus = "ON";
                     res.status(200).send(applicationStatus);
-                    await tryUntilSucceed(main, 2);
+                    await tryUntilSucceed(main, 0);
                 }
             } catch (error) {
                 next(error);
