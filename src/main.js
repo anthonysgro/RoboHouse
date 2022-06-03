@@ -19,11 +19,11 @@ module.exports = main = async () => {
 
             // Emit Listings
             if (process.env.SLACK_NOTIFICATIONS_ENABLED === "true") {
-                await postSlackMessage(newRentals);
+                // await postSlackMessage(newRentals);
             }
 
             if (process.env.TEXT_NOTIFICATIONS_ENABLED === "true") {
-                await emitNewListingsViaText(newRentals);
+                // await emitNewListingsViaText(newRentals);
             }
 
             // Sleep for 10 minutes and ping again

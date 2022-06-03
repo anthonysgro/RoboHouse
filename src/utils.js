@@ -26,6 +26,8 @@ const batchCreateRentalsIfNotExists = async (listings) => {
 
         if (createQueue.length > 0) {
             return await Promise.all(createQueue);
+        } else if (createQueue === undefined) {
+            throw "createQueue is undefined";
         } else {
             return [];
         }
