@@ -12,7 +12,7 @@ const emitNewListingsViaText = require("./twilio");
 module.exports = main = async () => {
     try {
         while (true) {
-            console.log("********** Initiating Search **********");
+            console.log("********* Initiating Search *********");
 
             // Get Listings
             const newRentals = await robohouse();
