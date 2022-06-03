@@ -59,6 +59,8 @@ module.exports = robohouse = async () => {
 
             // Dedupe listings
             const newListings = await batchCreateRentalsIfNotExists(listings);
+            console.log(newListings);
+
             console.log(
                 `Number of new ${name} listings stored to DB:`,
                 newListings.length,
