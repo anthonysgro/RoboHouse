@@ -11,7 +11,7 @@ const isRentalUrlUnique = async (url) => {
 
 const batchCreateRentalsIfNotExists = async (listings) => {
     try {
-        if (listings.length === 0) return;
+        if (listings.length === 0) return [];
 
         const createQueue = [];
         for (const listing of listings) {
@@ -24,13 +24,7 @@ const batchCreateRentalsIfNotExists = async (listings) => {
             }
         }
 
-        if (createQueue.length > 0) {
-            return await Promise.all(createQueue);
-        } else if (createQueue === undefined) {
-            throw "createQueue is undefined";
-        } else {
-            return [];
-        }
+        return await Promise.all(createQueue);
     } catch (err) {
         throw err;
     }
