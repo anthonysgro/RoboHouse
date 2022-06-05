@@ -15,20 +15,24 @@ const scrapeCorcoran = async (endpoint, page) => {
         // let data load and scroll to bottom to load images
         await sleep(10000);
 
-        await page.evaluate(() => {
-            document
-                .querySelector(
-                    ".ListingCard__ListingCardWrapper-sc-k9s72e-7:last-child",
-                )
-                .scrollIntoView({
-                    behavior: "smooth",
-                    block: "end",
-                    inline: "end",
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        });
+        await page
+            .evaluate(() => {
+                document
+                    .querySelector(
+                        ".ListingCard__ListingCardWrapper-sc-k9s72e-7:last-child",
+                    )
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "end",
+                        inline: "end",
+                    })
+                    .catch((err) => {
+                        throw err;
+                    });
+            })
+            .catch((err) => {
+                throw err;
+            });
 
         const content = await page.content();
 
