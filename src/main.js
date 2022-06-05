@@ -23,7 +23,7 @@ module.exports = main = async () => {
             }
 
             if (process.env.TEXT_NOTIFICATIONS_ENABLED === "true") {
-                // await emitNewListingsViaText(newRentals);
+                await emitNewListingsViaText(newRentals);
             }
 
             // Sleep for 10 minutes and ping again
