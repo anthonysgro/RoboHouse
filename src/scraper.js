@@ -14,6 +14,7 @@ const scrapeCorcoran = async (endpoint, page) => {
 
         // let data load and scroll to bottom to load images
         await sleep(10000);
+
         await page.evaluate(() => {
             document
                 .querySelector(
@@ -23,6 +24,9 @@ const scrapeCorcoran = async (endpoint, page) => {
                     behavior: "smooth",
                     block: "end",
                     inline: "end",
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
         });
 
@@ -64,7 +68,11 @@ const scrapeCorcoran = async (endpoint, page) => {
 
         return allResults;
     } catch (err) {
-        throw err;
+        if (err.message.includes("TypeError: Cannot read properties of null")) {
+            return [];
+        } else {
+            throw err;
+        }
     }
 };
 
